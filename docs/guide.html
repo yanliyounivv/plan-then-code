@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的 AI 协作开发系统 · 两个 Skill 的分工与门禁</title>
+<style>
+  /* ============ 设计变量：纸张质感 + 墨色 + 朱砂 ============ */
+  :root{
+    --paper:#FAF7F0;
+    --paper-raise:#FFFFFF;
+    --ink:#17160F;
+    --ink-2:#4C4840;
+    --ink-3:#8B8577;
+    --line:#E3DCCC;
+    --line-soft:#EFEAE0;
+    --accent:#A83A24;
+    --accent-soft:#F4E6E0;
+    --jade:#2E5D52;
+    --jade-soft:#E4EDEA;
+    --serif:"Songti SC","Source Han Serif SC","Noto Serif SC",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    --mono:"SF Mono",SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  /* 极轻的纸纹，纯 CSS，无外部资源 */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+      radial-gradient(1200px 600px at 12% -8%, rgba(168,58,36,.045), transparent 60%),
+      radial-gradient(900px 500px at 92% 8%, rgba(46,93,82,.045), transparent 62%),
+      repeating-linear-gradient(90deg, rgba(23,22,15,.014) 0 1px, transparent 1px 4px);
+  }
+  body > *{position:relative;z-index:1}
+
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(168,58,36,.28)}
+  a:hover{border-bottom-color:var(--accent)}
+
+  /* ============ 顶部阅读进度 ============ */
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60}
+  .progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .1s linear}
+
+  /* ============ 刊头 ============ */
+  .masthead{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:26px 40px 0;
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:var(--mono);
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  }
+  .masthead b{color:var(--ink-2);font-weight:600}
+
+  .hero{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:54px 40px 46px;
+    border-bottom:1px solid var(--line);
+  }
+  .kicker{
+    font-family:var(--mono);
+    font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--accent);
+    display:flex;align-items:center;gap:12px;
+  }
+  .kicker::before{content:"";width:34px;height:1px;background:var(--accent);display:inline-block}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(38px,6.2vw,70px);
+    line-height:1.14;
+    letter-spacing:-.01em;
+    margin:20px 0 6px;
+  }
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .en{
+    font-family:var(--mono);
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);
+    margin:0 0 26px;
+  }
+  .hero .lede{
+    font-family:var(--serif);
+    font-size:clamp(17px,2.1vw,21px);
+    line-height:1.85;
+    color:var(--ink-2);
+    max-width:61ch;
+    margin:0;
+  }
+  .hero .lede strong{
+    color:var(--ink);font-weight:600;
+    background:linear-gradient(180deg,transparent 60%,var(--accent-soft) 60%);
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 2px;
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:0;
+    margin-top:42px;
+    border-top:1px solid var(--line);
+  }
+  .stat{
+    padding:18px 20px 4px 0;
+    border-right:1px solid var(--line-soft);
+  }
+  .stat:last-child{border-right:0}
+  .stat .n{
+    font-family:var(--serif);
+    font-size:34px;line-height:1;color:var(--accent);display:block;
+  }
+  .stat .l{
+    font-size:12.5px;color:var(--ink-3);letter-spacing:.04em;margin-top:8px;display:block;
+  }
+
+  /* ============ 主体两栏 ============ */
+  .layout{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 40px 120px;
+    display:grid;
+    grid-template-columns:196px minmax(0,1fr);
+    gap:72px;
+    align-items:start;
+  }
+
+  .sidebar{
+    position:sticky;top:0;
+    padding:52px 0 40px;
+    max-height:100vh;
+    overflow-y:auto;
+    scrollbar-width:none;
+  }
+  .sidebar::-webkit-scrollbar{display:none}
+  .sidebar .toc-t{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--ink-3);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:14px;
+  }
+  .sidebar nav{display:flex;flex-direction:column;gap:2px}
+  .sidebar nav a{
+    display:flex;gap:10px;
+    padding:7px 0 7px 12px;
+    font-size:13.5px;
+    color:var(--ink-3);
+    border:0;
+    border-left:2px solid transparent;
+    transition:color .2s,border-color .2s,background .2s;
+    line-height:1.5;
+  }
+  .sidebar nav a span.i{
+    font-family:var(--mono);font-size:10.5px;color:var(--ink-3);opacity:.75;padding-top:3px;
+  }
+  .sidebar nav a:hover{color:var(--ink);background:rgba(23,22,15,.025)}
+  .sidebar nav a.active{
+    color:var(--accent);border-left-color:var(--accent);font-weight:600;
+    background:linear-gradient(90deg,rgba(168,58,36,.06),transparent);
+  }
+  .sidebar nav a.active span.i{color:var(--accent)}
+
+  main{min-width:0;padding-top:52px}
+
+  /* ============ 章节 ============ */
+  .sec{padding:0 0 74px;scroll-margin-top:24px}
+  .sec-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+  .sec-no{
+    font-family:var(--serif);
+    font-size:44px;line-height:.9;
+    color:transparent;
+    -webkit-text-stroke:1px var(--line);
+    letter-spacing:-.02em;
+    flex:0 0 auto;
+    transform:translateY(2px);
+  }
+  .sec h2{
+    font-family:var(--serif);
+    font-size:clamp(23px,2.9vw,30px);
+    font-weight:600;
+    margin:0;
+    line-height:1.3;
+    letter-spacing:-.01em;
+  }
+  .sec .sub{
+    color:var(--ink-3);font-size:13.5px;margin:10px 0 0;
+    letter-spacing:.02em;
+  }
+  .rule{height:1px;background:var(--line);margin:22px 0 30px}
+  .sec p{margin:0 0 16px;color:var(--ink-2)}
+  .sec p.note{
+    font-size:13.5px;color:var(--ink-3);
+    border-left:2px solid var(--line);padding-left:14px;margin-top:26px;
+  }
+
+  /* 三张定位卡 */
+  .cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:6px 0 4px}
+  .card{
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    padding:22px 22px 20px;
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px -18px rgba(23,22,15,.45);border-color:#D6CDB9}
+  .card .idx{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent);
+    text-transform:uppercase;
+  }
+  .card h3{
+    font-family:var(--serif);font-size:19px;font-weight:600;margin:12px 0 8px;line-height:1.4;
+  }
+  .card p{font-size:13.8px;color:var(--ink-2);margin:0;line-height:1.75}
+
+  /* 引用块 */
+  blockquote{
+    margin:26px 0;
+    padding:26px 28px;
+    background:linear-gradient(180deg,rgba(168,58,36,.05),rgba(168,58,36,.02));
+    border-left:3px solid var(--accent);
+    font-family:var(--serif);
+    font-size:19px;line-height:1.8;color:var(--ink);
+  }
+  blockquote span{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-3);margin-top:10px;letter-spacing:.02em}
+
+  /* 表格 */
+  .tw{overflow-x:auto;margin:6px 0 10px;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+  caption{
+    caption-side:top;text-align:left;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);padding-bottom:10px;
+  }
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  th{
+    font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.08em;
+    color:var(--ink-3);text-transform:uppercase;border-bottom:1px solid var(--line);
+    background:rgba(250,247,240,.6);white-space:nowrap;
+  }
+  tbody tr:hover{background:rgba(23,22,15,.018)}
+  td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+  td code,li code,p code{
+    font-family:var(--mono);font-size:.86em;
+    background:rgba(23,22,15,.05);padding:1px 3px;border-radius:2px;color:#3A352C;
+  }
+  .wf{color:var(--jade);font-weight:600}
+  .ru{color:var(--accent);font-weight:600}
+
+  /* 流程 */
+  .flow{list-style:none;margin:0;padding:0;position:relative}
+  .flow::before{
+    content:"";position:absolute;left:15px;top:14px;bottom:26px;width:1px;
+    background:linear-gradient(180deg,var(--line),var(--line-soft));
+  }
+  .step{position:relative;margin:0}
+  .step-head{
+    appearance:none;border:0;background:transparent;
+    width:100%;text-align:left;cursor:pointer;
+    display:flex;align-items:center;gap:14px;
+    padding:10px 0;
+    font-family:var(--sans);
+    border-radius:2px;
+    transition:background .2s;
+  }
+  .step-head:hover{background:rgba(23,22,15,.022)}
+  .step-no{
+    flex:0 0 31px;width:31px;height:31px;
+    display:grid;place-items:center;
+    background:var(--paper);
+    border:1px solid var(--line);
+    font-family:var(--serif);font-size:15px;color:var(--ink-2);
+    border-radius:50%;
+    transition:background .25s,color .25s,border-color .25s;
+    z-index:1;
+  }
+  .step.open .step-no{background:var(--accent);border-color:var(--accent);color:#fff}
+  .step-title{
+    font-family:var(--serif);font-size:17.5px;font-weight:600;color:var(--ink);flex:1 1 auto;
+    line-height:1.45;
+  }
+  .step-title small{
+    font-family:var(--sans);font-size:12.5px;color:var(--ink-3);font-weight:400;
+    display:block;margin-top:2px;letter-spacing:.02em;
+  }
+  .chev{
+    font-family:var(--mono);font-size:14px;color:var(--ink-3);
+    transition:transform .25s,color .25s;flex:0 0 auto;
+  }
+  .step.open .chev{transform:rotate(45deg);color:var(--accent)}
+  .step-body{
+    display:grid;grid-template-rows:0fr;
+    transition:grid-template-rows .32s ease;
+    margin-left:45px;
+  }
+  .step-body > div{overflow:hidden}
+  .step.open .step-body{grid-template-rows:1fr}
+  .step-body p{font-size:14px;margin:6px 0 12px;color:var(--ink-2)}
+  .step-body ul{margin:0 0 14px;padding-left:18px;font-size:13.8px;color:var(--ink-2)}
+  .step-body li{margin-bottom:6px}
+  .step-body li::marker{color:var(--accent)}
+  .tagrow{display:flex;flex-wrap:wrap;gap:7px;padding-bottom:16px}
+  .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+    padding:3.5px 9px;border:1px solid var(--line);color:var(--ink-3);
+    background:var(--paper-raise);
+  }
+  .tag.hot{border-color:rgba(168,58,36,.35);color:var(--accent);background:rgba(168,58,36,.05)}
+  .tag.cool{border-color:rgba(46,93,82,.3);color:var(--jade);background:rgba(46,93,82,.05)}
+
+  /* 优先级阶梯 */
+  .ladder{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .ladder li{
+    display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:baseline;
+    padding:13px 16px;
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    border-left-width:3px;
+  }
+  .ladder li.p0{border-left-color:#7A1F0F}
+  .ladder li.p1{border-left-color:#A83A24}
+  .ladder li.p2{border-left-color:#C4762F}
+  .ladder li.p3{border-left-color:#8A8577}
+  .ladder li.p4{border-left-color:#B9B2A2}
+  .ladder li.p5{border-left-color:#D6CDB9}
+  .ladder .k{
+    font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink);letter-spacing:.04em;
+  }
+  .ladder .v{font-size:14px;color:var(--ink-2);line-height:1.65}
+  .ladder .v b{color:var(--ink)}
+
+  /* 铁律工具条 */
+  .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px}
+  .chip{
+    appearance:none;cursor:pointer;
+    font-family:var(--sans);font-size:12.5px;
+    padding:6px 13px;
+    background:transparent;color:var(--ink-2);
+    border:1px solid var(--line);
+    transition:all .2s;
+  }
+  .chip:hover{border-color:#CFC5AE;color:var(--ink)}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#FAF7F0}
+  .chip i{font-style:normal;font-family:var(--mono);font-size:10.5px;opacity:.6;margin-left:5px}
+  .search{
+    flex:1 1 100%;min-width:0;
+    display:flex;align-items:center;gap:8px;
+    border:1px solid var(--line);background:var(--paper-raise);
+    padding:9px 13px;
+  }
+  .search input{
+    border:0;outline:none;background:transparent;width:100%;
+    font-family:var(--sans);font-size:13px;color:var(--ink);
+  }
+  .search input::placeholder{color:var(--ink-3)}
+  .search span{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+  .laws{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .law{
+    border:1px solid var(--line);
+    background:var(--paper-raise);
+    padding:15px 17px 14px;
+    transition:transform .2s,border-color .2s,box-shadow .2s,opacity .2s;
+  }
+  .law:hover{transform:translateY(-2px);border-color:#D6CDB9;box-shadow:0 8px 20px -16px rgba(23,22,15,.4)}
+  .law .code{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent);font-weight:600;
+  }
+  .law h3{font-family:var(--serif);font-size:16px;font-weight:600;margin:6px 0 5px;line-height:1.45}
+  .law p{font-size:13.2px;color:#5E594D;margin:0;line-height:1.65}
+  .law.hide{display:none}
+  .empty{
+    display:none;grid-column:1/-1;text-align:center;padding:34px 0;
+    font-size:13.5px;color:var(--ink-3);
+  }
+  .empty.show{display:block}
+
+  /* 结构树 */
+  pre.tree{
+    font-family:var(--mono);font-size:12.4px;line-height:1.85;
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    padding:22px 24px;margin:6px 0 0;
+    overflow-x:auto;color:var(--ink-2);
+  }
+  pre.tree b{color:var(--accent);font-weight:600}
+  pre.tree i{color:var(--ink-3);font-style:normal}
+
+  /* 维护闭环 */
+  .chain{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin:6px 0 0}
+  .node{
+    flex:1 1 150px;min-width:140px;
+    border:1px solid var(--line);
+    background:var(--paper-raise);
+    padding:14px 15px;
+    position:relative;
+    transition:border-color .2s,transform .2s;
+  }
+  .node:hover{border-color:rgba(168,58,36,.4);transform:translateY(-2px)}
+  .node .n{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-3);
+  }
+  .node .t{font-family:var(--serif);font-size:15px;font-weight:600;margin:6px 0 4px;line-height:1.4}
+  .node .d{font-size:12.2px;color:var(--ink-3);line-height:1.6}
+  .node code{font-size:11.4px}
+  .node.gate{border-color:rgba(168,58,36,.28);background:linear-gradient(180deg,rgba(168,58,36,.045),var(--paper-raise))}
+
+  .callout{
+    margin-top:26px;padding:20px 22px;
+    border:1px dashed var(--line);border-left:3px solid var(--jade);
+    background:rgba(46,93,82,.035);
+    font-size:13.8px;color:var(--ink-2);
+  }
+  .callout b{color:var(--ink)}
+  .callout p{margin:0}
+  .callout p + p{margin-top:10px}
+
+  /* 页脚 */
+  footer{
+    border-top:1px solid var(--line);
+    background:rgba(255,255,255,.4);
+  }
+  .foot-in{
+    max-width:var(--maxw);margin:0 auto;padding:38px 40px 54px;
+    display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--ink-3);
+  }
+  .foot-in .brand{font-family:var(--serif);font-size:15px;color:var(--ink);letter-spacing:.02em}
+  .foot-in .meta{font-family:var(--mono);font-size:11px;letter-spacing:.08em;line-height:2}
+  .foot-in .meta b{color:var(--ink-2);font-weight:600}
+
+  /* 入场动效 */
+  .reveal{opacity:0;transform:translateY(14px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.3,1)}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal,.reveal.in{opacity:1;transform:none;transition:none}
+    .step-body{transition:none}
+  }
+
+  /* ============ 响应式 ============ */
+  @media (max-width:1080px){
+    .layout{grid-template-columns:168px minmax(0,1fr);gap:44px}
+    .cards3{grid-template-columns:1fr}
+  }
+  @media (max-width:900px){
+    .masthead,.hero,.layout,.foot-in{padding-left:24px;padding-right:24px}
+    .layout{display:block;padding-bottom:80px}
+    .sidebar{
+      position:sticky;top:0;z-index:40;
+      max-height:none;overflow:visible;
+      padding:0;margin:0 -24px 8px;
+      background:rgba(250,247,240,.94);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .sidebar .toc-t{display:none}
+    .sidebar nav{
+      flex-direction:row;overflow-x:auto;gap:0;
+      padding:10px 24px;scrollbar-width:none;
+    }
+    .sidebar nav::-webkit-scrollbar{display:none}
+    .sidebar nav a{
+      border-left:0;border-bottom:2px solid transparent;
+      padding:5px 12px 6px;white-space:nowrap;font-size:13px;
+    }
+    .sidebar nav a.active{border-bottom-color:var(--accent);background:none}
+    .sidebar nav a span.i{display:none}
+    main{padding-top:26px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat{border-right:0;border-bottom:1px solid var(--line-soft);padding:14px 0}
+    .stat:nth-child(odd){padding-right:14px}
+    .laws{grid-template-columns:1fr}
+    .hero{padding-top:38px;padding-bottom:34px}
+  }
+  @media (max-width:560px){
+    .sec{padding-bottom:56px}
+    .sec-no{font-size:34px}
+    .ladder li{grid-template-columns:56px 1fr;gap:12px;padding:12px 13px}
+    .node{flex:1 1 100%}
+    blockquote{font-size:17px;padding:20px}
+    .masthead{font-size:10px;letter-spacing:.1em}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><span id="bar"></span></div>
+
+<div class="masthead">
+  <span><b>My_Skill</b> · 内部系统文档</span>
+  <span>Rules v6.1 / Workflow v4.1 · 2026-11-24</span>
+</div>
+
+<header class="hero">
+  <div class="kicker">Plan-Driven Coding</div>
+  <h1>我的 AI 协作开发系统<br><em>两个 Skill</em>，一套门禁</h1>
+  <p class="en">My Skill System · How It Works</p>
+  <p class="lede">
+    这不是一堆提示词，而是一套约束 AI 行为的协作协议：<strong>任务到手先出计划、只确认一次</strong>，
+    然后拆成带编号的任务逐条写、逐条验、逐条报；文档不在编码途中补，而在任务完成时一次补齐。
+    一句话——<strong>按计划写代码，不是按代码写 md</strong>。
+  </p>
+
+  <div class="stats">
+    <div class="stat"><span class="n">2</span><span class="l">Skill 协作运转</span></div>
+    <div class="stat"><span class="n">5</span><span class="l">流程铁律 W01–W05</span></div>
+    <div class="stat"><span class="n">16</span><span class="l">规则铁律 R01–R16</span></div>
+    <div class="stat"><span class="n">6</span><span class="l">自动校验项</span></div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="toc-t">目录 Contents</div>
+    <nav id="toc">
+      <a href="#idea"><span class="i">01</span>它解决什么问题</a>
+      <a href="#split"><span class="i">02</span>两个 Skill 的分工</a>
+      <a href="#flow"><span class="i">03</span>主线：一次任务怎么走</a>
+      <a href="#gates"><span class="i">04</span>三处门禁与优先级</a>
+      <a href="#laws"><span class="i">05</span>十六条铁律</a>
+      <a href="#tree"><span class="i">06</span>文件结构</a>
+      <a href="#loop"><span class="i">07</span>维护闭环</a>
+      <a href="#check"><span class="i">08</span>自检：5 句话验证</a>
+    </nav>
+  </aside>
+
+  <main>
+
+    <!-- ========== 01 ========== -->
+    <section class="sec reveal" id="idea">
+      <div class="sec-head">
+        <span class="sec-no">01</span>
+        <div>
+          <h2>它解决什么问题</h2>
+          <p class="sub">AI 写代码最常见的三种失控，这里各有一条对策</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <p>和 AI 协作写代码，翻车基本不在"写不出来"，而在三件事：理解错了就动手、边写边想越写越偏、做完了拿文档当证据。这套系统把这三件事各自钉在流程的一个位置上。</p>
+
+      <div class="cards3">
+        <div class="card">
+          <div class="idx">Problem 01</div>
+          <h3>没理解就动手</h3>
+          <p>对策：⓪ 入口门禁。先把理解复述一遍、圈定范围与验收点，<b>只有一次确认</b>，点头前一行代码都不写。</p>
+        </div>
+        <div class="card">
+          <div class="idx">Problem 02</div>
+          <h3>边写边想越写越偏</h3>
+          <p>对策：② 把方案落成 T1…Tn，每条带「做什么 / 验收点 / 依赖」。③ 只按编号推进，验不过不进下一条。</p>
+        </div>
+        <div class="card">
+          <div class="idx">Problem 03</div>
+          <h3>拿文档当证据</h3>
+          <p>对策：判进度、审计、排错一律看磁盘真实代码；交付必须给证据——接口实测、构建通过、或前后截图。</p>
+        </div>
+      </div>
+
+      <blockquote>
+        主产物是跑得起来的代码；计划是驱动代码的图纸；文档在任务完成时统一更新到位——该更的都更、该记的都记，但不边写边补，也不拿文档当进度证据。
+        <span>—— my-dev-workflow 的一句话定位</span>
+      </blockquote>
+    </section>
+
+    <!-- ========== 02 ========== -->
+    <section class="sec reveal" id="split">
+      <div class="sec-head">
+        <span class="sec-no">02</span>
+        <div>
+          <h2>两个 Skill 的分工</h2>
+          <p class="sub">工作流决定<strong>顺序</strong>，规则库决定<strong>质量</strong>——触发域刻意不重叠</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <div class="tw">
+        <table>
+          <caption>Table 1 · 职责对照</caption>
+          <thead>
+            <tr><th>维度</th><th class="wf">my-dev-workflow v4.1</th><th class="ru">my-dev-rules v6.1</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>回答的问题</td><td>整件事怎么推进</td><td>这一段怎么做才对</td></tr>
+            <tr><td>核心内容</td><td>⓪ 门禁、②–⑥ SOP、T1…Tn、问题决策树、日志规范、文件地图</td><td>规则优先级、R01–R16、案例库、4 篇分端技术红线、产品体验、交付规范</td></tr>
+            <tr><td>触发域</td><td>列计划、排顺序、按编号推进、交接上下文、记日志、整理文件、画流程图</td><td>写代码、改 UI、技术方案、审计、排查报错、重构、验收核对</td></tr>
+            <tr><td>加载时机</td><td>任务一来先加载，判断处在哪个阶段</td><td>动手写代码 / 改 UI / 审计时加载</td></tr>
+            <tr><td>硬预算</td><td><code>SKILL.md</code> ≤ 7000 字节</td><td><code>SKILL.md</code> ≤ 7000 字节</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note">两边 <code>description</code> 的触发词是按上表切开的，就是为了避免一句话让两个 skill 各读一遍全文。真动手写代码时两个都读：先看工作流确认这是③的哪一条 Tn，再查规则库确认这一条具体怎么写。</p>
+
+      <div class="callout">
+        <p><b>能力黑名单（越界就不接）</b></p>
+        <p>只做：计划推进、按编号执行、交接上下文、日志与文件结构管理、流程图。<br>
+        不做：纯问答 / 翻译 / 闲聊 · 排期报价与人力估算 · 代替用户决定涉钱、资质、合规、发布的事 · 没看到代码就给架构评审结论。</p>
+        <p>越界时只回两句话之一：「这归 X 管，不走本流程」或「要先看到代码（或截图、报错原文）才能判断」。</p>
+      </div>
+    </section>
+
+    <!-- ========== 03 ========== -->
+    <section class="sec reveal" id="flow">
+      <div class="sec-head">
+        <span class="sec-no">03</span>
+        <div>
+          <h2>主线：一次任务怎么走</h2>
+          <p class="sub">点开每一步看硬要求 · 全系统只有这一处画全套流程</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <ul class="flow" id="flowList">
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">⓪</span>
+            <span class="step-title">入口门禁 · 出计划 + 复述理解<small>唯一一次确认就发生在这里</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>接任务先答三问，缺什么问什么，不拿"我以为"当输入。然后一次性给出计划与理解复述，等一句确认。</p>
+            <ul>
+              <li>三问：目标端（小程序 / Web 后台 / 后端 / 原生 App / 单文件）、代码范围（哪个项目哪个目录）、验收方式（截图 / 接口实测 / 构建通过）</li>
+              <li>计划五件套：目标范围、阶段顺序、验收点、待确认点、风险</li>
+              <li>用户说「先列需求 / 不改代码」→ 停在设计层，只出方案不写码</li>
+            </ul>
+            <div class="tagrow"><span class="tag hot">W01</span><span class="tag hot">R01</span><span class="tag">一次确认</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">②</span>
+            <span class="step-title">方案设计 · 拍板 + 拆任务<small>最后一道确认门</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>给 2~3 个方案并附推荐，由用户拍板；随后把方案落成带编号的任务清单——这一步没做完就进③，等于边想边写。</p>
+            <ul>
+              <li>每条 Tn 必须写清：做什么 + 验收点 + 依赖，三缺一不算完成</li>
+              <li>同时定契约（接口字段、状态枚举），后面五方对齐以它为准</li>
+            </ul>
+            <div class="tagrow"><span class="tag">方案选项制</span><span class="tag">契约单一来源</span><span class="tag cool">纯设计到此为止</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">③</span>
+            <span class="step-title">编码实现 · 逐条写、当场验、当场报<small>主战场</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>只做当前编号的那一条，写完立刻在自己这里验证，然后把结果报出来；没过验收点不进下一条。</p>
+            <ul>
+              <li>同一条连续失败 <b>2 次必须停下汇报</b>，禁止第 3 次盲试</li>
+              <li>动手这一刻去查规则库：这一段怎么写才对</li>
+              <li>不打断去补文档；发现同类问题先记着，收尾一次汇报</li>
+            </ul>
+            <div class="tagrow"><span class="tag hot">W02</span><span class="tag">验一条报一条</span><span class="tag">R06 R07</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">④</span>
+            <span class="step-title">审计复查 · 真实代码 + 契约三方对照<small>P0–P3 分级</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>审计只认磁盘代码与实测，文档只作线索。问题按 P0–P3 排序，每条都标到 <code>文件:行号</code> 这一级</p>
+            <ul>
+              <li>P0 / P1 清零才允许进⑤</li>
+              <li>修复循环里同一个问题最多 3 轮</li>
+            </ul>
+            <div class="tagrow"><span class="tag hot">R02</span><span class="tag">P0–P3</span><span class="tag">最多 3 轮</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">⑤</span>
+            <span class="step-title">验收交付 · 证据 + 五方对齐 + 分级<small>UI 必须前后截图</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>按交付规范的结构汇报：给证据、标级别、说清哪些还没做。</p>
+            <ul>
+              <li>证据三选一：接口实测 / 构建通过 / 截图对比</li>
+              <li>功能分级：【真实现 / 占位 / 演示数据】，占位要留扩展点</li>
+              <li>五方对齐：调用 ↔ 字段 ↔ 返回 ↔ 库 ↔ 后台</li>
+            </ul>
+            <div class="tagrow"><span class="tag hot">R14 R15</span><span class="tag">五方对齐</span><span class="tag">R12</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">⑥</span>
+            <span class="step-title">上线发布 · 清单 + 回滚路径<small>动作等明确指令</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>上线前先跑清单、备好回滚路径；但部署、提审、开公网、重启、git 提交这些动作，一律等用户明确说。</p>
+            <div class="tagrow"><span class="tag hot">W05</span><span class="tag hot">R16</span></div>
+          </div></div>
+        </li>
+
+        <li class="step">
+          <button class="step-head" aria-expanded="false">
+            <span class="step-no">↺</span>
+            <span class="step-title">收尾 · 横向扫同类 + 统一补文档<small>停下等用户决定：提交 / 上线 / 继续</small></span>
+            <span class="chev">＋</span>
+          </button>
+          <div class="step-body"><div>
+            <p>任务完成时一次补齐，不是只记一条流水：</p>
+            <ul>
+              <li>横向扫全项目同类问题，<b>一次汇报</b>（扫出来必须说，但只修本任务范围内 + 影响当前链路的）</li>
+              <li>统一更新：开发日志 / 文件地图 / 契约 / 流程图 / ADR</li>
+            </ul>
+            <div class="tagrow"><span class="tag hot">W04</span><span class="tag hot">R03</span></div>
+          </div></div>
+        </li>
+      </ul>
+
+      <p class="note">小改动的计划已经足够明确时可直接进③；纯设计任务停在②。除此之外，确认门只有两处：⓪ 的计划、② 的拍板。</p>
+    </section>
+
+    <!-- ========== 04 ========== -->
+    <section class="sec reveal" id="gates">
+      <div class="sec-head">
+        <span class="sec-no">04</span>
+        <div>
+          <h2>三处门禁与优先级</h2>
+          <p class="sub">两套规则并存必然打架，所以必须有一处裁决顺序</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <p>优先级定义全系统只此一处。没有这一层，AI 会挑对自己方便的那条执行——这正是"文档一套、代码一套"的来源。</p>
+
+      <ul class="ladder">
+        <li class="p0"><span class="k">P0</span><span class="v"><b>用户在本次对话里的明确指令</b> — 覆盖下面任何条款</span></li>
+        <li class="p1"><span class="k">P1</span><span class="v"><b>安全与数据不可逆风险</b> — 宁可停手先问</span></li>
+        <li class="p2"><span class="k">P2</span><span class="v"><b>编号铁律 R01–R16</b></span></li>
+        <li class="p3"><span class="k">P3</span><span class="v"><b>流程阶段顺序 W01–W05</b></span></li>
+        <li class="p4"><span class="k">P4</span><span class="v"><b>技术细则</b> — 分端红线、框架约定</span></li>
+        <li class="p5"><span class="k">P5</span><span class="v"><b>案例库与历史经验</b></span></li>
+      </ul>
+
+      <div class="callout">
+        <p><b>三条元规则（跨级冲突时用）</b></p>
+        <p><b>1 · 两个 skill 打架</b>：先判是"顺序"还是"质量"——顺序听 workflow，质量听 rules；分不清取更保守的一方。</p>
+        <p><b>2 · 规则与磁盘代码冲突</b>：当轮以实测为准，按真实代码办事，收尾回头改规则并记进化日志。<b>规则不许压过事实。</b></p>
+        <p><b>3 · 同级冲突</b>：先看是否触及不可逆伤害；再比范围——"修一处扫同类"不等于全改：扫出来必须一次汇报，但只修本任务范围内、影响当前链路的，跨模块列清单等拍板。</p>
+      </div>
+    </section>
+
+    <!-- ========== 05 ========== -->
+    <section class="sec reveal" id="laws">
+      <div class="sec-head">
+        <span class="sec-no">05</span>
+        <div>
+          <h2>十六条铁律</h2>
+          <p class="sub">违反即返工，可在日志与审计里按编号回指</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <div class="tools">
+        <div class="search">
+          <span>⌕</span>
+          <input id="q" type="search" placeholder="搜编号或关键词，如 R03 / 假数据 / 契约" aria-label="搜索铁律">
+        </div>
+        <button class="chip on" data-cat="all">全部<i>16</i></button>
+        <button class="chip" data-cat="understand">理解与事实<i>4</i></button>
+        <button class="chip" data-cat="act">行动与验证<i>5</i></button>
+        <button class="chip" data-cat="product">产品与契约<i>4</i></button>
+        <button class="chip" data-cat="deliver">交付与权限<i>3</i></button>
+      </div>
+
+      <div class="laws" id="laws">
+        <article class="law" data-cat="understand"><div class="code">R01</div><h3>不许没理解就动手</h3><p>模糊指令先复述理解，等确认再动手。</p></article>
+        <article class="law" data-cat="understand"><div class="code">R02</div><h3>不许只看文档不看代码</h3><p>审计、进度、排查只认磁盘代码与实测。</p></article>
+        <article class="law" data-cat="understand"><div class="code">R03</div><h3>不许修一处不查同类</h3><p>修完全项目扫同类，一次汇报一起修。</p></article>
+        <article class="law" data-cat="understand"><div class="code">R04</div><h3>不许重复索要已给信息</h3><p>参数、截图、报错不再问第二遍。</p></article>
+
+        <article class="law" data-cat="act"><div class="code">R05</div><h3>不许原地空想不行动</h3><p>缺插件缺方案就自己去找去试。</p></article>
+        <article class="law" data-cat="act"><div class="code">R06</div><h3>不许把占位当真实现</h3><p>占位说占位，假数据说假数据。</p></article>
+        <article class="law" data-cat="act"><div class="code">R07</div><h3>不许把环境噪音当缺陷</h3><p>先判性质，不为误报改业务代码。</p></article>
+        <article class="law" data-cat="act"><div class="code">R08</div><h3>不许启动完不验证</h3><p>端口 + 健康检查 + 主链路；验不了要说验不了。</p></article>
+        <article class="law" data-cat="act"><div class="code">R09</div><h3>不许拿"文件一致"当结论</h3><p>md5 相同 ≠ 渲染正确，要查 CSS 层叠。</p></article>
+
+        <article class="law" data-cat="product"><div class="code">R10</div><h3>无假数据</h3><p>数据须入库、走真实链路；空就展示空状态。</p></article>
+        <article class="law" data-cat="product"><div class="code">R11</div><h3>无死按钮、无断流程</h3><p>按钮真调接口；发起→详情→流转→完成→可回看。</p></article>
+        <article class="law" data-cat="product"><div class="code">R12</div><h3>前后端契约一致</h3><p>调用↔字段↔返回↔库↔后台，五方对齐。</p></article>
+        <article class="law" data-cat="product"><div class="code">R13</div><h3>状态全中文 + 全端共用</h3><p>一张枚举映射表，不把 pending 透给用户。</p></article>
+
+        <article class="law" data-cat="deliver"><div class="code">R14</div><h3>证据三选一必给</h3><p>接口实测 / 构建通过 / 截图；UI 必须前后对比。</p></article>
+        <article class="law" data-cat="deliver"><div class="code">R15</div><h3>功能分级标注</h3><p>【真实现 / 占位 / 演示数据】，占位要留扩展点。</p></article>
+        <article class="law" data-cat="deliver"><div class="code">R16</div><h3>部署提交等指令</h3><p>部署、提审、开公网、重启、git 提交都等明确说。</p></article>
+
+        <div class="empty" id="empty">没有匹配的铁律，换个关键词试试。</div>
+      </div>
+
+      <p class="note">R01–R09 的真实翻车案例收在 <code>references/最痛的教训.md</code>；R10–R13 细则在 <code>references/产品体验.md</code> §4–§7；R14–R16 的结构与清单在 <code>references/交付规范.md</code>。</p>
+    </section>
+
+    <!-- ========== 06 ========== -->
+    <section class="sec reveal" id="tree">
+      <div class="sec-head">
+        <span class="sec-no">06</span>
+        <div>
+          <h2>文件结构</h2>
+          <p class="sub">源头只有一处，安装副本单向生成</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <p><code>My_Skill/</code> 是唯一权威源头，改规则只改这里。系统里那两个 <code>my-dev-*</code> 只是安装副本——直接改它们，源头会立刻变成过期快照。</p>
+
+<pre class="tree">My_Skill/
+├── <b>README.md</b>                总索引 + 维护规则
+├── 校验.sh                  守门人：六项检查（只读）
+├── 自检任务.md              冒烟用例：5 句话验证是否生效
+├── 进化日志.md              所有 skill 的更新记录
+├── skill工作原理.md          系统工作原理图（Mermaid）
+├── 同步工具.sh               check 查差 / pack 打包 / sync 安装
+├── <b>skills/</b>                  唯一权威源头，改规则只改这里
+│   ├── my-dev-rules/        规则库：这一段「怎么做才对」
+│   │   └── references/      案例 · 协作流程 · 4 篇分端红线 · 产品体验 · 交付规范
+│   └── my-dev-workflow/     工作流：整件事「怎么推进」
+│       ├── references/      6 篇阶段 SOP + 决策树 · 日志 · 文件 · 流程图 · 交付形态
+│       └── assets/          日志模板 · ADR 模板（模板唯一存放处）
+└── skills安装包/            可分发的 zip（由 pack 生成，不手打）
+</pre>
+    </section>
+
+    <!-- ========== 07 ========== -->
+    <section class="sec reveal" id="loop">
+      <div class="sec-head">
+        <span class="sec-no">07</span>
+        <div>
+          <h2>维护闭环</h2>
+          <p class="sub">规则不自动进化：只在明确要求改规则时才动，然后走这条链</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <div class="chain">
+        <div class="node">
+          <div class="n">STEP 01</div>
+          <div class="t">改 skills/ 里的文件</div>
+          <div class="d">同时改 frontmatter 的 <code>version</code> 与 <code>updated</code>，并记进化日志。</div>
+        </div>
+        <div class="node gate">
+          <div class="n">STEP 02</div>
+          <div class="t">./校验.sh</div>
+          <div class="d">六项：死链 / 结构完整性 / 版本 / 体量 / 重复 / 卫生。有 fail 回第一步。</div>
+        </div>
+        <div class="node">
+          <div class="n">STEP 03</div>
+          <div class="t">check · pack · sync</div>
+          <div class="d">查两边哪边新 → 重打 zip → 装到用户级（要输入「覆盖」）。</div>
+        </div>
+        <div class="node gate">
+          <div class="n">STEP 04</div>
+          <div class="t">跑自检 5 句</div>
+          <div class="d">新会话里发那 5 句，看过不了就回去改。两次都过才算稳。</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><b>方向是单向的</b>：只能从 <code>My_Skill/skills/</code> 单向流向用户级 skills 目录，反过来直接改安装副本会让源头变成过期快照——2026-11-24 就这么落后过一整个版本。<code>check</code> 就是为拦这个加的。</p>
+        <p><b>为什么加校验脚本</b>：规则写多了必然"说了 A 处、忘改 B 处"。六项里最值钱的是<b>重复段落</b>和<b>死链</b>——它们正是单一事实源被破坏的两个征兆。</p>
+        <p><b>硬预算</b>：每个 <code>SKILL.md</code> ≤ 7000 字节。超了就说明该把细节下沉到 <code>references/</code>；<code>SKILL.md</code> 只放"每次都必须遵守"的内容。</p>
+      </div>
+    </section>
+
+    <!-- ========== 08 ========== -->
+    <section class="sec reveal" id="check">
+      <div class="sec-head">
+        <span class="sec-no">08</span>
+        <div>
+          <h2>自检：5 句话验证</h2>
+          <p class="sub">规则写得再漂亮，也可能因为触发词没收好而根本没被加载</p>
+        </div>
+      </div>
+      <div class="rule"></div>
+
+      <p>改完 skill 后开新会话，把下面 5 句原样发过去，<b>只看它的第一个动作</b>——不是看答得好不好看，是看它有没有停在门禁上。</p>
+
+      <div class="tw">
+        <table>
+          <caption>Table 2 · 冒烟用例</caption>
+          <thead>
+            <tr><th>#</th><th>原样发给 AI</th><th>期望的第一个动作</th><th>失败信号</th><th>对应</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>S1</td><td>把登录页那个按钮颜色改一下，不好看</td><td>不写代码；先复述"哪个按钮"，出计划，等确认</td><td>直接给改后样式；或只问"要什么颜色"就完事</td><td><code>W01</code> <code>R01</code></td></tr>
+            <tr><td>S2</td><td>帮我审计一下这个项目</td><td>立刻读磁盘代码，产出 P0–P3 清单，每条带 <code>文件:行号</code></td><td>翻 docs 就下结论；给"整体不错"这类无证据判断</td><td><code>R02</code></td></tr>
+            <tr><td>S3</td><td>继续往下做</td><td>直接取下一条 Tn 开工，并说明这是第几条</td><td>重新问"你想做什么"、再要一次确认</td><td><code>W02</code></td></tr>
+            <tr><td>S4</td><td>报错了：NPM packages not found</td><td>先问"什么操作下出现的、哪个环境"，再动手</td><td>直接改配置、删 node_modules、建议重装依赖</td><td><code>R07</code></td></tr>
+            <tr><td>S5</td><td>用户头像上传在个人页修好了</td><td>横向扫全项目同类，一次性汇报</td><td>只改这一处就报完成</td><td><code>R03</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note">某条没过 → 先查该条规则是否位于 <code>SKILL.md</code> 的「必读」区（优先级 / 铁律表），而不只躺在 <code>references/</code> 里。references 是按需加载，放在那里的规则不会被每条任务读到。</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="foot-in">
+    <div class="brand">My_Skill · 我的 AI 协作开发系统</div>
+    <div class="meta">
+      <b>my-dev-rules</b> v6.1 &nbsp;·&nbsp; <b>my-dev-workflow</b> v4.1<br>
+      源头 /Users/Admin/提示词/My_Skill/ &nbsp;·&nbsp; 校验六项全通过
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 1. 阅读进度 ---------- */
+  var bar = document.getElementById("bar");
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = Math.min(100, Math.max(0, p * 100)) + "%";
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  onScroll();
+
+  /* ---------- 2. 入场渐显 ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); }
+      });
+    }, { rootMargin: "-40px 0px -8% 0px", threshold: 0.04 });
+    reveals.forEach(function (el) { ro.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---------- 3. 侧边导航高亮 ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  function highlight() {
+    var pos = window.scrollY + 140;
+    var idx = 0;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] && sections[i].offsetTop <= pos) idx = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle("active", i === idx); });
+  }
+  window.addEventListener("scroll", highlight, { passive: true });
+  window.addEventListener("resize", highlight);
+  highlight();
+
+  /* ---------- 4. 流程节点展开 ---------- */
+  document.querySelectorAll(".step-head").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var li = btn.closest(".step");
+      var open = li.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+
+  /* ---------- 5. 铁律搜索与筛选 ---------- */
+  var laws = Array.prototype.slice.call(document.querySelectorAll("#laws .law"));
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+  var q = document.getElementById("q");
+  var empty = document.getElementById("empty");
+  var cat = "all";
+
+  function apply() {
+    var kw = (q.value || "").trim().toLowerCase();
+    var shown = 0;
+    laws.forEach(function (el) {
+      var text = el.textContent.toLowerCase();
+      var okCat = cat === "all" || el.getAttribute("data-cat") === cat;
+      var okKw = !kw || text.indexOf(kw) !== -1;
+      var ok = okCat && okKw;
+      el.classList.toggle("hide", !ok);
+      if (ok) shown++;
+    });
+    empty.classList.toggle("show", shown === 0);
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () {
+      chips.forEach(function (x) { x.classList.remove("on"); });
+      c.classList.add("on");
+      cat = c.getAttribute("data-cat");
+      apply();
+    });
+  });
+  q.addEventListener("input", apply);
+
+  /* ---------- 6. 快捷键：/ 聚焦搜索 ---------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q) {
+      var sec = document.getElementById("laws").getBoundingClientRect();
+      if (sec.top < window.innerHeight && sec.bottom > 0) { e.preventDefault(); q.focus(); }
+    }
+    if (e.key === "Escape" && document.activeElement === q) { q.value = ""; apply(); q.blur(); }
+  });
+})();
+</script>
+</body>
+</html>
