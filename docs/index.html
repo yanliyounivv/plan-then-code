@@ -97,11 +97,11 @@
   .band .tail{font-family:var(--sans);font-size:13.5px;color:#A9A296;max-width:30ch;margin:0;line-height:1.75;border-left:1px solid rgba(255,255,255,.18);padding-left:22px}
 
   /* ============ 首屏右下：等轴测爆炸图 ============ */
-  .ex{position:absolute;right:26px;bottom:8px;width:clamp(330px,27vw,388px);pointer-events:none;z-index:2}
-  .ex svg{display:block;width:100%;height:auto;overflow:visible;animation:whole 6.4s cubic-bezier(.45,.05,.55,.95) infinite 2.2s}
+  .ex{position:absolute;right:40px;bottom:42px;height:clamp(300px,62vh,470px);width:auto;pointer-events:none;z-index:2}
+  .ex svg{display:block;height:100%;width:auto;overflow:visible;animation:whole 6.4s cubic-bezier(.45,.05,.55,.95) infinite 2.2s}
   @keyframes whole{0%,100%{transform:translateY(0)}34%{transform:translateY(-2.5px)}76%{transform:translateY(1.5px)}}
-  .ex-ttl{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;fill:var(--accent)}
-  .ex-note{font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;fill:#B4B2A9}
+  .ex-ttl{font-family:var(--mono);font-size:5.6px;letter-spacing:.2em;fill:var(--accent)}
+  .ex-note{font-family:var(--mono);font-size:5.2px;letter-spacing:.04em;fill:#B4B2A9}
   .axis{fill:none;stroke:#DCD5C3;stroke-width:.5;stroke-dasharray:2 4;stroke-dashoffset:1;animation:exLine 1.1s ease-out both 1.02s,axPulse 6.4s ease-in-out 1.4s infinite}
   @keyframes axPulse{0%,100%{opacity:.38}50%{opacity:1}}
   .st{fill:#FFFFFF;stroke:#B5AD98;stroke-width:.5}
@@ -110,7 +110,7 @@
   .hl{fill:none;stroke:rgba(255,255,255,.85);stroke-width:.7}
   .hh{fill:#FAF7F0;stroke:#BFB6A0;stroke-width:.5}
   .hi{fill:#E9E2D1;stroke:none}
-  .no{font-family:var(--mono);font-size:8.5px;fill:#B0A894;letter-spacing:.16em}
+  .no{font-family:var(--mono);font-size:4.9px;fill:#B0A894;letter-spacing:.16em}
   .ly.top .st{fill:#FEF8F0;stroke:#96311E;stroke-width:.7;animation:topPulse 6.4s ease-in-out .1s infinite}
   @keyframes topPulse{0%,100%{stroke-opacity:.72}50%{stroke-opacity:1}}
   .ly.top .sl{fill:#F4DECF;stroke:#96311E;stroke-width:.7}
@@ -123,46 +123,46 @@
   .fl0{animation:br0 6.4s cubic-bezier(.45,.05,.55,.95) infinite;animation-delay:1.5s}
   @keyframes br0{
     0%,100%{transform:translateY(0)}
-    32%{transform:translateY(-3px)}
-    72%{transform:translateY(1.65px)}
+    32%{transform:translateY(-2.2px)}
+    72%{transform:translateY(1.21px)}
   }
   .fl1{animation:br1 6.4s cubic-bezier(.45,.05,.55,.95) infinite;animation-delay:1.5s}
   @keyframes br1{
     0%,100%{transform:translateY(0)}
-    32%{transform:translateY(-5.5px)}
-    72%{transform:translateY(3.03px)}
+    32%{transform:translateY(-3.6px)}
+    72%{transform:translateY(1.98px)}
   }
   .fl2{animation:br2 6.4s cubic-bezier(.45,.05,.55,.95) infinite;animation-delay:1.5s}
   @keyframes br2{
     0%,100%{transform:translateY(0)}
-    32%{transform:translateY(-8px)}
-    72%{transform:translateY(4.4px)}
+    32%{transform:translateY(-5.2px)}
+    72%{transform:translateY(2.86px)}
   }
   .fl3{animation:br3 6.4s cubic-bezier(.45,.05,.55,.95) infinite;animation-delay:3.04s}
   @keyframes br3{
     0%,100%{transform:translateY(0)}
-    32%{transform:translateY(-11px)}
-    72%{transform:translateY(6.05px)}
+    32%{transform:translateY(-6.8px)}
+    72%{transform:translateY(3.74px)}
   }
   .fl4{animation:br4 6.4s cubic-bezier(.45,.05,.55,.95) infinite;animation-delay:3.32s}
   @keyframes br4{
     0%,100%{transform:translateY(0)}
-    32%{transform:translateY(-14px)}
-    72%{transform:translateY(7.7px)}
+    32%{transform:translateY(-8.5px)}
+    72%{transform:translateY(4.68px)}
   }
   .lead{fill:none;stroke:#C1B9A5;stroke-width:.5;stroke-dasharray:1;stroke-dashoffset:1;animation:exLine .5s ease-out both;animation-delay:var(--ld,1.26s)}
   .ly.top .lead{stroke:#96311E;opacity:.45}
   .dot{fill:#FAF7F0;stroke:#B5AD98;stroke-width:.5;opacity:0;animation:exFade .4s both;animation-delay:var(--ld,1.26s)}
   .ly.top .dot{stroke:#96311E;fill:#FDF4EC}
-  .k{font-family:var(--mono);font-size:10.5px;fill:#2F2A22;opacity:0;animation:exFade .45s both;animation-delay:var(--ld,1.26s)}
+  .k{font-family:var(--mono);font-size:6.9px;fill:#2F2A22;opacity:0;animation:exFade .45s both;animation-delay:var(--ld,1.26s)}
   .ly.top .k{fill:#96311E}
-  .ks{font-family:var(--sans);font-size:9.5px;fill:#9C9481;opacity:0;animation:exFade .45s both;animation-delay:var(--ld,1.26s)}
+  .ks{font-family:var(--sans);font-size:6.2px;fill:#9C9481;opacity:0;animation:exFade .45s both;animation-delay:var(--ld,1.26s)}
   @keyframes lyGo{from{transform:translateY(var(--sy))}to{transform:translateY(0)}}
   @keyframes exLine{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
   @keyframes exFade{from{opacity:0}to{opacity:1}}
   .sh{fill:rgba(23,22,15,.075)}
   .ly.top .sh{fill:rgba(150,49,30,.11)}
-  @media (min-width:1011px) and (max-height:700px){.ex{width:336px;right:22px;bottom:6px}}
+  @media (min-width:1011px) and (max-height:700px){.ex{right:34px;bottom:30px;height:clamp(290px,58vh,400px)}}
   @media (max-width:1010px){.ex{display:none}}
   @media (prefers-reduced-motion:reduce){
     .ex *{animation:none!important}
@@ -389,81 +389,86 @@
       <p class="hk-s">往下 6 节 <i>↓</i></p>
     </div>
     <div class="ex" aria-hidden="true">
-      <svg viewBox="0 0 310 452" width="100%">
-        <text class="ex-ttl" x="60" y="13">EXPLODED VIEW · 5 LAYERS</text>
-        <path d="M60 19 L94 19" fill="none" stroke="#C9B7A8" stroke-width=".6"/>
-        <path class="axis" d="M100 55 L100 400" pathLength="1"/>
-      <g class="ly" style="--sy:0px;--d:0.76s">
+      <svg viewBox="0 0 200 306" width="100%">
+        <text class="ex-ttl" x="18" y="14">EXPLODED · 5 LAYERS</text>
+        <path d="M18 19 L40 19" fill="none" stroke="#C9B7A8" stroke-width=".6"/>
+        <path class="axis" d="M44 65 L44 286" pathLength="1"/>
+      <g class="ly" style="--sy:0px;--d:0.74s">
         <g class="fl fl0">
-          <path class="sl" d="M50 359 L100 384 L100 400 L50 375 Z"/>
-          <path class="sr" d="M100 384 L150 359 L150 375 L100 400 Z"/>
-          <path class="sh" d="M100 344.0 L145 369.0 L100 394.0 L55 369.0 Z"/><path class="st" d="M100 334 L150 359 L100 384 L50 359 Z"/>
-          <path class="hl" d="M50 359 L100 400"/>
-          <circle class="hh" cx="100.0" cy="340.0" r="2.6"/><circle class="hi" cx="100.0" cy="340.0" r="1"/><circle class="hh" cx="138.0" cy="359.0" r="2.6"/><circle class="hi" cx="138.0" cy="359.0" r="1"/><circle class="hh" cx="100.0" cy="378.0" r="2.6"/><circle class="hi" cx="100.0" cy="378.0" r="1"/><circle class="hh" cx="62.0" cy="359.0" r="2.6"/><circle class="hi" cx="62.0" cy="359.0" r="1"/>
-          <text class="no" x="100" y="361.5" text-anchor="middle">01</text>
-          <path class="lead" d="M150 359 L176 359" pathLength="1" style="--ld:1.26s"/>
+          <path class="sh" d="M44 249.2 L73.7 262 L44 274.8 L14.3 262 Z"/>
+          <path class="sl" d="M11 253 L44 269 L44 278 L11 262 Z"/>
+          <path class="sr" d="M44 269 L77 253 L77 262 L44 278 Z"/>
+          <path class="st" d="M44 237 L77 253 L44 269 L11 253 Z"/>
+          <path class="hl" d="M11 253 L44 278"/>
+          <circle class="hh" cx="44.0" cy="240.8" r="1.9"/><circle class="hi" cx="44.0" cy="240.8" r=".75"/><circle class="hh" cx="69.1" cy="253.0" r="1.9"/><circle class="hi" cx="69.1" cy="253.0" r=".75"/><circle class="hh" cx="44.0" cy="265.2" r="1.9"/><circle class="hi" cx="44.0" cy="265.2" r=".75"/><circle class="hh" cx="18.9" cy="253.0" r="1.9"/><circle class="hi" cx="18.9" cy="253.0" r=".75"/>
+          <text class="no" x="44" y="255" text-anchor="middle">01</text>
+          <path class="lead" d="M77 253 L96 253" pathLength="1" style="--ld:1.20s"/>
         </g>
-        <circle class="dot" cx="180" cy="359" r="2" style="--ld:1.26s"/>
-        <text class="k" x="188" y="357" style="--ld:1.26s">workflow</text>
-        <text class="ks" x="188" y="372" style="--ld:1.26s">顺序 · 六阶段</text>
+        <circle class="dot" cx="100" cy="253" r="1.6" style="--ld:1.20s"/>
+        <text class="k" x="106" y="252" style="--ld:1.20s">workflow</text>
+        <text class="ks" x="106" y="263" style="--ld:1.20s">顺序 · 六阶段</text>
       </g>
-      <g class="ly" style="--sy:76px;--d:0.82s">
+      <g class="ly" style="--sy:47px;--d:0.80s">
         <g class="fl fl1">
-          <path class="sl" d="M50 283 L100 308 L100 324 L50 299 Z"/>
-          <path class="sr" d="M100 308 L150 283 L150 299 L100 324 Z"/>
-          <path class="sh" d="M100 268.0 L145 293.0 L100 318.0 L55 293.0 Z"/><path class="st" d="M100 258 L150 283 L100 308 L50 283 Z"/>
-          <path class="hl" d="M50 283 L100 324"/>
-          <circle class="hh" cx="100.0" cy="264.0" r="2.6"/><circle class="hi" cx="100.0" cy="264.0" r="1"/><circle class="hh" cx="138.0" cy="283.0" r="2.6"/><circle class="hi" cx="138.0" cy="283.0" r="1"/><circle class="hh" cx="100.0" cy="302.0" r="2.6"/><circle class="hi" cx="100.0" cy="302.0" r="1"/><circle class="hh" cx="62.0" cy="283.0" r="2.6"/><circle class="hi" cx="62.0" cy="283.0" r="1"/>
-          <text class="no" x="100" y="285.5" text-anchor="middle">02</text>
-          <path class="lead" d="M150 283 L176 283" pathLength="1" style="--ld:1.32s"/>
+          <path class="sh" d="M44 202.2 L73.7 215 L44 227.8 L14.3 215 Z"/>
+          <path class="sl" d="M11 206 L44 222 L44 231 L11 215 Z"/>
+          <path class="sr" d="M44 222 L77 206 L77 215 L44 231 Z"/>
+          <path class="st" d="M44 190 L77 206 L44 222 L11 206 Z"/>
+          <path class="hl" d="M11 206 L44 231"/>
+          <circle class="hh" cx="44.0" cy="193.8" r="1.9"/><circle class="hi" cx="44.0" cy="193.8" r=".75"/><circle class="hh" cx="69.1" cy="206.0" r="1.9"/><circle class="hi" cx="69.1" cy="206.0" r=".75"/><circle class="hh" cx="44.0" cy="218.2" r="1.9"/><circle class="hi" cx="44.0" cy="218.2" r=".75"/><circle class="hh" cx="18.9" cy="206.0" r="1.9"/><circle class="hi" cx="18.9" cy="206.0" r=".75"/>
+          <text class="no" x="44" y="208" text-anchor="middle">02</text>
+          <path class="lead" d="M77 206 L96 206" pathLength="1" style="--ld:1.26s"/>
         </g>
-        <circle class="dot" cx="180" cy="283" r="2" style="--ld:1.32s"/>
-        <text class="k" x="188" y="281" style="--ld:1.32s">rules</text>
-        <text class="ks" x="188" y="296" style="--ld:1.32s">质量 · 十六条铁律</text>
+        <circle class="dot" cx="100" cy="206" r="1.6" style="--ld:1.26s"/>
+        <text class="k" x="106" y="205" style="--ld:1.26s">rules</text>
+        <text class="ks" x="106" y="216" style="--ld:1.26s">质量 · 十六条铁律</text>
       </g>
-      <g class="ly" style="--sy:152px;--d:0.88s">
+      <g class="ly" style="--sy:94px;--d:0.86s">
         <g class="fl fl2">
-          <path class="sl" d="M50 207 L100 232 L100 248 L50 223 Z"/>
-          <path class="sr" d="M100 232 L150 207 L150 223 L100 248 Z"/>
-          <path class="sh" d="M100 192.0 L145 217.0 L100 242.0 L55 217.0 Z"/><path class="st" d="M100 182 L150 207 L100 232 L50 207 Z"/>
-          <path class="hl" d="M50 207 L100 248"/>
-          <circle class="hh" cx="100.0" cy="188.0" r="2.6"/><circle class="hi" cx="100.0" cy="188.0" r="1"/><circle class="hh" cx="138.0" cy="207.0" r="2.6"/><circle class="hi" cx="138.0" cy="207.0" r="1"/><circle class="hh" cx="100.0" cy="226.0" r="2.6"/><circle class="hi" cx="100.0" cy="226.0" r="1"/><circle class="hh" cx="62.0" cy="207.0" r="2.6"/><circle class="hi" cx="62.0" cy="207.0" r="1"/>
-          <text class="no" x="100" y="209.5" text-anchor="middle">03</text>
-          <path class="lead" d="M150 207 L176 207" pathLength="1" style="--ld:1.38s"/>
+          <path class="sh" d="M44 155.2 L73.7 168 L44 180.8 L14.3 168 Z"/>
+          <path class="sl" d="M11 159 L44 175 L44 184 L11 168 Z"/>
+          <path class="sr" d="M44 175 L77 159 L77 168 L44 184 Z"/>
+          <path class="st" d="M44 143 L77 159 L44 175 L11 159 Z"/>
+          <path class="hl" d="M11 159 L44 184"/>
+          <circle class="hh" cx="44.0" cy="146.8" r="1.9"/><circle class="hi" cx="44.0" cy="146.8" r=".75"/><circle class="hh" cx="69.1" cy="159.0" r="1.9"/><circle class="hi" cx="69.1" cy="159.0" r=".75"/><circle class="hh" cx="44.0" cy="171.2" r="1.9"/><circle class="hi" cx="44.0" cy="171.2" r=".75"/><circle class="hh" cx="18.9" cy="159.0" r="1.9"/><circle class="hi" cx="18.9" cy="159.0" r=".75"/>
+          <text class="no" x="44" y="161" text-anchor="middle">03</text>
+          <path class="lead" d="M77 159 L96 159" pathLength="1" style="--ld:1.32s"/>
         </g>
-        <circle class="dot" cx="180" cy="207" r="2" style="--ld:1.38s"/>
-        <text class="k" x="188" y="205" style="--ld:1.38s">P0–P5</text>
-        <text class="ks" x="188" y="220" style="--ld:1.38s">裁决 · 谁说了算</text>
+        <circle class="dot" cx="100" cy="159" r="1.6" style="--ld:1.32s"/>
+        <text class="k" x="106" y="158" style="--ld:1.32s">P0–P5</text>
+        <text class="ks" x="106" y="169" style="--ld:1.32s">裁决 · 谁说了算</text>
       </g>
-      <g class="ly" style="--sy:228px;--d:0.94s">
+      <g class="ly" style="--sy:141px;--d:0.92s">
         <g class="fl fl3">
-          <path class="sl" d="M50 131 L100 156 L100 172 L50 147 Z"/>
-          <path class="sr" d="M100 156 L150 131 L150 147 L100 172 Z"/>
-          <path class="sh" d="M100 116.0 L145 141.0 L100 166.0 L55 141.0 Z"/><path class="st" d="M100 106 L150 131 L100 156 L50 131 Z"/>
-          <path class="hl" d="M50 131 L100 172"/>
-          <circle class="hh" cx="100.0" cy="112.0" r="2.6"/><circle class="hi" cx="100.0" cy="112.0" r="1"/><circle class="hh" cx="138.0" cy="131.0" r="2.6"/><circle class="hi" cx="138.0" cy="131.0" r="1"/><circle class="hh" cx="100.0" cy="150.0" r="2.6"/><circle class="hi" cx="100.0" cy="150.0" r="1"/><circle class="hh" cx="62.0" cy="131.0" r="2.6"/><circle class="hi" cx="62.0" cy="131.0" r="1"/>
-          <text class="no" x="100" y="133.5" text-anchor="middle">04</text>
-          <path class="lead" d="M150 131 L176 131" pathLength="1" style="--ld:1.44s"/>
+          <path class="sh" d="M44 108.2 L73.7 121 L44 133.8 L14.3 121 Z"/>
+          <path class="sl" d="M11 112 L44 128 L44 137 L11 121 Z"/>
+          <path class="sr" d="M44 128 L77 112 L77 121 L44 137 Z"/>
+          <path class="st" d="M44 96 L77 112 L44 128 L11 112 Z"/>
+          <path class="hl" d="M11 112 L44 137"/>
+          <circle class="hh" cx="44.0" cy="99.8" r="1.9"/><circle class="hi" cx="44.0" cy="99.8" r=".75"/><circle class="hh" cx="69.1" cy="112.0" r="1.9"/><circle class="hi" cx="69.1" cy="112.0" r=".75"/><circle class="hh" cx="44.0" cy="124.2" r="1.9"/><circle class="hi" cx="44.0" cy="124.2" r=".75"/><circle class="hh" cx="18.9" cy="112.0" r="1.9"/><circle class="hi" cx="18.9" cy="112.0" r=".75"/>
+          <text class="no" x="44" y="114" text-anchor="middle">04</text>
+          <path class="lead" d="M77 112 L96 112" pathLength="1" style="--ld:1.38s"/>
         </g>
-        <circle class="dot" cx="180" cy="131" r="2" style="--ld:1.44s"/>
-        <text class="k" x="188" y="129" style="--ld:1.44s">references</text>
-        <text class="ks" x="188" y="144" style="--ld:1.44s">九篇 · 按需加载</text>
+        <circle class="dot" cx="100" cy="112" r="1.6" style="--ld:1.38s"/>
+        <text class="k" x="106" y="111" style="--ld:1.38s">references</text>
+        <text class="ks" x="106" y="122" style="--ld:1.38s">九篇 · 按需加载</text>
       </g>
-      <g class="ly top" style="--sy:304px;--d:1.00s">
+      <g class="ly top" style="--sy:188px;--d:0.98s">
         <g class="fl fl4">
-          <path class="sl" d="M50 55 L100 80 L100 96 L50 71 Z"/>
-          <path class="sr" d="M100 80 L150 55 L150 71 L100 96 Z"/>
-          <path class="sh" d="M100 40.0 L145 65.0 L100 90.0 L55 65.0 Z"/><path class="st" d="M100 30 L150 55 L100 80 L50 55 Z"/>
-          <path class="hl" d="M50 55 L100 96"/>
-          <circle class="hh" cx="100.0" cy="36.0" r="2.6"/><circle class="hi" cx="100.0" cy="36.0" r="1"/><circle class="hh" cx="138.0" cy="55.0" r="2.6"/><circle class="hi" cx="138.0" cy="55.0" r="1"/><circle class="hh" cx="100.0" cy="74.0" r="2.6"/><circle class="hi" cx="100.0" cy="74.0" r="1"/><circle class="hh" cx="62.0" cy="55.0" r="2.6"/><circle class="hi" cx="62.0" cy="55.0" r="1"/>
-          <text class="no" x="100" y="57.5" text-anchor="middle">05</text>
-          <path class="lead" d="M150 55 L176 55" pathLength="1" style="--ld:1.50s"/>
+          <path class="sh" d="M44 61.2 L73.7 74 L44 86.8 L14.3 74 Z"/>
+          <path class="sl" d="M11 65 L44 81 L44 90 L11 74 Z"/>
+          <path class="sr" d="M44 81 L77 65 L77 74 L44 90 Z"/>
+          <path class="st" d="M44 49 L77 65 L44 81 L11 65 Z"/>
+          <path class="hl" d="M11 65 L44 90"/>
+          <circle class="hh" cx="44.0" cy="52.8" r="1.9"/><circle class="hi" cx="44.0" cy="52.8" r=".75"/><circle class="hh" cx="69.1" cy="65.0" r="1.9"/><circle class="hi" cx="69.1" cy="65.0" r=".75"/><circle class="hh" cx="44.0" cy="77.2" r="1.9"/><circle class="hi" cx="44.0" cy="77.2" r=".75"/><circle class="hh" cx="18.9" cy="65.0" r="1.9"/><circle class="hi" cx="18.9" cy="65.0" r=".75"/>
+          <text class="no" x="44" y="67" text-anchor="middle">05</text>
+          <path class="lead" d="M77 65 L96 65" pathLength="1" style="--ld:1.44s"/>
         </g>
-        <circle class="dot" cx="180" cy="55" r="2" style="--ld:1.50s"/>
-        <text class="k" x="188" y="53" style="--ld:1.50s">校验</text>
-        <text class="ks" x="188" y="68" style="--ld:1.50s">六项脚本 + 5 句冒烟</text>
+        <circle class="dot" cx="100" cy="65" r="1.6" style="--ld:1.44s"/>
+        <text class="k" x="106" y="64" style="--ld:1.44s">校验</text>
+        <text class="ks" x="106" y="75" style="--ld:1.44s">六项脚本 + 5 句冒烟</text>
       </g>
-        <text class="ex-note" x="60" y="436">五层叠起来才成立 · 21 条硬约束 / 6 项校验</text>
+        <text class="ex-note" x="18" y="300">五层叠起来才成立</text>
       </svg>
     </div>
 
