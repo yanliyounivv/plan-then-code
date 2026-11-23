@@ -77,6 +77,10 @@
   .band-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:40px;align-items:center;flex-wrap:wrap}
   .band p{font-family:var(--serif);font-size:clamp(19px,2.6vw,27px);line-height:1.6;margin:0;flex:1 1 400px}
   .band p em{font-style:normal;color:#E9A88F}
+  .band.inset{margin:0 0 44px;padding:34px 34px 32px}
+  .band.inset .band-in{gap:30px}
+  .band.inset p{font-size:clamp(18px,2.1vw,23px);flex:1 1 320px}
+  .band.inset .tail{font-size:13px;max-width:31ch}
   .band .tail{font-family:var(--sans);font-size:13.5px;color:#A9A296;max-width:30ch;margin:0;line-height:1.75;border-left:1px solid rgba(255,255,255,.18);padding-left:22px}
 
   .layout{max-width:var(--maxw);margin:0 auto;padding:0 40px 96px;display:grid;grid-template-columns:212px minmax(0,1fr);gap:64px;align-items:start}
@@ -279,12 +283,6 @@
     </div>
   </section>
 
-  <div class="band">
-    <div class="band-in">
-      <p>按计划写代码，<em>不是按代码写 md</em></p>
-      <p class="tail">主产物是跑得起来的代码；文档在收尾时一次补齐，不拿它当进度证据。</p>
-    </div>
-  </div>
 
   <div class="layout">
 
@@ -578,6 +576,13 @@
           </details>
         </div>
       </section>
+
+      <div class="band inset reveal">
+        <div class="band-in">
+          <p>按计划写代码，<em>不是按代码写 md</em></p>
+          <p class="tail">主产物是跑得起来的代码；文档在收尾时一次补齐，不拿它当进度证据。</p>
+        </div>
+      </div>
 
       <section class="contact" id="contact">
         <div class="contact-card reveal">
