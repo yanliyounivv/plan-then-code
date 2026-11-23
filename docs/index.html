@@ -71,7 +71,8 @@
   .scopes{margin:32px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 22px;font-size:13.2px;color:var(--ink-2);letter-spacing:.01em;line-height:1.9}
   .scopes .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-right:15px}
   .scopes span:not(.lbl){white-space:nowrap}
-  .metaline{display:flex;flex-wrap:wrap;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .metalabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin:30px 0 0}
+  .metaline{display:flex;flex-wrap:wrap;margin-top:9px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .metaline div{flex:1 1 0;min-width:138px;padding:15px 18px 13px 0;border-right:1px solid var(--line-soft)}
   .metaline div:last-child{border-right:0}
   .metaline .n{font-family:var(--serif);font-size:29px;line-height:1;color:var(--accent);display:block}
@@ -197,11 +198,13 @@
 
   .end{display:flex;align-items:center;gap:16px;margin:6px 0 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase}
   .end::before,.end::after{content:"";height:1px;background:var(--line);flex:1 1 auto}
-  footer{border-top:1px solid var(--line);margin-top:40px}
-  .foot{max-width:var(--maxw);margin:0 auto;padding:28px 40px 44px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
-  .foot .b{font-family:var(--serif);font-size:15px;color:var(--ink)}
-  .foot .b em{font-style:normal;color:var(--accent)}
-  .foot .m{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);line-height:2;text-align:right}
+  footer{background:var(--ink);color:#F6F1E6;margin-top:30px}
+  .foot{max-width:var(--maxw);margin:0 auto;padding:46px 40px 40px;display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;align-items:flex-end}
+  .foot .quote{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);line-height:1.55;margin:0;flex:1 1 360px;color:#F6F1E6}
+  .foot .quote em{font-style:normal;color:#E9A88F}
+  .foot .m{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#A9A296;line-height:2;text-align:right}
+  .foot .m b{display:block;font-family:var(--serif);font-size:14px;font-weight:600;color:#F6F1E6;letter-spacing:.02em;margin-bottom:7px}
+  .foot .m b em{font-style:normal;color:#C9755D}
 
   .reveal{opacity:0;transform:translateY(14px)}
   .reveal.in{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.3,1)}
@@ -280,6 +283,7 @@
       <span class="lbl">覆盖</span>
       <span>微信小程序</span><span>Web 后台</span><span>后端接口</span><span>原生 App</span><span>单文件网页</span>
     </div>
+    <div class="metalabel">规格</div>
     <div class="metaline">
       <div><span class="n">2</span><span class="l">skill 分工：顺序 × 质量</span></div>
       <div><span class="n">21</span><span class="l">硬约束：5 流程 + 16 铁律</span></div>
@@ -582,13 +586,6 @@
         </div>
       </section>
 
-      <div class="band inset reveal">
-        <div class="band-in">
-          <p>按计划写代码，<em>不是按代码写 md</em></p>
-          <p class="tail">主产物是跑得起来的代码；文档在收尾时一次补齐，不拿它当进度证据。</p>
-        </div>
-      </div>
-
       <section class="contact" id="contact">
         <div class="contact-card reveal">
           <div>
@@ -610,8 +607,9 @@
 
 <footer>
   <div class="foot">
-    <div class="b">My<em>_</em>Skill · 计划之后的那几件事</div>
+    <p class="quote">按计划写代码，<em>不是按代码写 md</em></p>
     <div class="m">
+      <b>My<em>_</em>Skill · 计划之后的那几件事</b>
       rules v6.1 · workflow v4.1<br>
       MIT License · 2026
     </div>
