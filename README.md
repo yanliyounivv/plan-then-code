@@ -1,4 +1,4 @@
-# my-dev-skills
+# plan-then-code
 
 **给 AI 编程助手的一套硬约束。管的是「计划之后」的那五件事。**
 
