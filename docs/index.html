@@ -65,8 +65,12 @@
   .kicker::before{content:"";width:32px;height:1px;background:var(--accent)}
   .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(33px,5.2vw,60px);line-height:1.18;letter-spacing:-.01em;margin:22px 0 0;max-width:18em;text-wrap:balance}
   .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero h1 .mbr{display:none}
   .hero .lede{font-family:var(--serif);font-size:clamp(16px,1.85vw,18.5px);line-height:1.95;color:var(--ink-2);max-width:50ch;margin:26px 0 0;text-wrap:pretty}
   .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:34px}
+  .scopes{margin:32px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 22px;font-size:13.2px;color:var(--ink-2);letter-spacing:.01em;line-height:1.9}
+  .scopes .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-right:15px}
+  .scopes span:not(.lbl){white-space:nowrap}
   .metaline{display:flex;flex-wrap:wrap;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .metaline div{flex:1 1 0;min-width:138px;padding:15px 18px 13px 0;border-right:1px solid var(--line-soft)}
   .metaline div:last-child{border-right:0}
@@ -241,6 +245,8 @@
     .sec{padding-bottom:54px}
   }
   @media (max-width:560px){
+    .hero h1 .mbr{display:inline}
+    .scopes{gap:2px 16px}
     .metaline div{flex:1 1 46%;border-right:0;border-bottom:1px solid var(--line-soft);padding:13px 0}
     .metaline div:nth-child(2n){padding-left:14px}
     .steps{grid-template-columns:1fr}
@@ -248,7 +254,6 @@
     .btn{width:100%}
     .contact-card .acts{width:100%}
     .foot .m{text-align:left}
-    .topact .tbtn:first-child{display:none}
   }
 </style>
 </head>
@@ -266,14 +271,14 @@
 
   <section class="hero wrap">
     <div class="kicker">给 AI 编程助手的一套硬约束</div>
-    <h1>计划模式人人都有。<br>这套管的是<em>计划之后</em>的事。</h1>
+    <h1>计划模式人人都有。<br>这套管的是<br class="mbr"><em>计划之后</em>的事。</h1>
     <p class="lede">
       规则打架听谁的、同一条错第三次还试不试、规则写到第 50 条会不会自相矛盾、
       AI 说「改好了」凭什么算过——这四件事每天在出事，而大多数提示词里没有答案。
     </p>
-    <div class="cta-row">
-      <a class="btn btn-ink" href="https://github.com/yanliyounivv/my-dev-skills" target="_blank" rel="noopener">在 GitHub 查看</a>
-      <a class="btn btn-ghost" data-mail href="#">联系作者</a>
+    <div class="scopes">
+      <span class="lbl">覆盖</span>
+      <span>微信小程序</span><span>Web 后台</span><span>后端接口</span><span>原生 App</span><span>单文件网页</span>
     </div>
     <div class="metaline">
       <div><span class="n">2</span><span class="l">skill 分工：顺序 × 质量</span></div>
