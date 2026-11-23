@@ -3,332 +3,248 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My_Skill · 计划之后的那五件事</title>
-<meta name="description" content="计划模式人人都有。这套管的是计划之后：规则打架听谁的、同一条错第三次还试不试、改到第 50 条会不会互相矛盾、交付凭什么算过。21 条硬约束，6 项自动校验。">
+<title>My_Skill · 计划之后的那几件事</title>
+<meta name="description" content="计划模式人人都有。这套管的是计划之后：规则打架听谁的、错第三次还试不试、规则会不会自相矛盾、交付凭什么算过。21 条硬约束，6 项自动校验。">
 <style>
   :root{
-    --paper:#FAF7F0;
-    --paper-raise:#FFFFFF;
-    --ink:#17160F;
-    --ink-2:#4C4840;
-    --ink-3:#8B8577;
-    --line:#E3DCCC;
-    --line-soft:#EFEAE0;
-    --accent:#A83A24;
-    --accent-dark:#7E2A18;
-    --accent-soft:#F4E6E0;
+    --paper:#FAF7F0; --raise:#FFFFFF;
+    --ink:#17160F; --ink-2:#4C4840; --ink-3:#8B8577;
+    --line:#E3DCCC; --line-soft:#EFEAE0;
+    --accent:#A83A24; --accent-dark:#7E2A18; --accent-soft:#F4E6E0;
     --jade:#2E5D52;
-    --jade-soft:#E4EDEA;
     --serif:"Songti SC","Source Han Serif SC","Noto Serif SC",Georgia,"Times New Roman",serif;
     --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     --mono:"SF Mono",SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
-    --maxw:1120px;
+    --maxw:1140px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--sans);font-size:16px;line-height:1.75;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
   body::before{
     content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:
-      radial-gradient(1100px 520px at 10% -6%, rgba(168,58,36,.05), transparent 62%),
-      radial-gradient(820px 460px at 96% 4%, rgba(46,93,82,.045), transparent 64%);
+    background:radial-gradient(980px 460px at 8% -6%, rgba(168,58,36,.05), transparent 62%),
+               radial-gradient(740px 400px at 96% 2%, rgba(46,93,82,.04), transparent 64%);
   }
   body > *{position:relative;z-index:1}
   a{color:var(--accent);text-decoration:none}
   p{margin:0 0 16px}
 
-  /* ---------- 顶栏 ---------- */
   .topbar{
-    position:sticky;top:0;z-index:50;
-    display:flex;align-items:center;gap:26px;
-    padding:0 40px;height:62px;
-    background:rgba(250,247,240,.86);
-    backdrop-filter:saturate(140%) blur(12px);
-    border-bottom:1px solid transparent;
+    position:sticky;top:0;z-index:50;display:flex;align-items:center;
+    padding:0 40px;height:64px;background:rgba(250,247,240,.9);
+    backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid transparent;
     transition:border-color .3s,box-shadow .3s;
   }
   .topbar.stuck{border-bottom-color:var(--line);box-shadow:0 6px 22px -20px rgba(23,22,15,.5)}
-  .logo{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);letter-spacing:.02em;white-space:nowrap}
+  .logo{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);white-space:nowrap}
   .logo i{font-style:normal;color:var(--accent)}
-  .topnav{display:flex;gap:22px;margin-left:8px;flex:1 1 auto}
-  .topnav a{
-    font-size:13.5px;color:var(--ink-3);letter-spacing:.02em;
-    border-bottom:1px solid transparent;padding:2px 0;transition:color .2s,border-color .2s;
+  .topact{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .tbtn{
+    font-size:13px;padding:8px 16px;border:1px solid var(--line);color:var(--ink-2);
+    font-family:var(--sans);font-weight:600;transition:all .2s;white-space:nowrap;
   }
-  .topnav a:hover{color:var(--ink);border-bottom-color:var(--line)}
+  .tbtn:hover{border-color:var(--ink);color:var(--ink)}
+  .tbtn.solid{background:var(--ink);border-color:var(--ink);color:#FAF7F0}
+  .tbtn.solid:hover{background:var(--accent);border-color:var(--accent)}
 
-  /* ---------- 按钮 ---------- */
   .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;
-    font-family:var(--sans);font-size:14.5px;font-weight:600;
-    padding:13px 26px;border:1px solid transparent;cursor:pointer;text-decoration:none;
-    transition:transform .18s ease,background .2s,color .2s,border-color .2s,box-shadow .2s;
-    white-space:nowrap;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-size:14.5px;font-weight:600;padding:13px 26px;
+    border:1px solid transparent;cursor:pointer;white-space:nowrap;
+    transition:transform .18s ease,background .2s,border-color .2s,box-shadow .2s;
   }
   .btn:hover{transform:translateY(-2px)}
-  .btn-accent{background:var(--accent);color:#fff}
-  .btn-accent:hover{background:var(--accent-dark);box-shadow:0 12px 26px -18px rgba(126,42,24,.9)}
+  .btn-ink{background:var(--ink);color:#FAF7F0}
+  .btn-ink:hover{background:#000;box-shadow:0 12px 26px -18px rgba(0,0,0,.85)}
   .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
   .btn-ghost:hover{border-color:var(--ink);background:rgba(255,255,255,.6)}
-  .btn-mini{
-    margin-left:auto;font-size:13px;padding:8px 18px;background:var(--ink);color:#FAF7F0;
-    border:0;cursor:pointer;font-family:var(--sans);font-weight:600;
-    transition:background .2s,transform .18s;
-  }
-  .btn-mini:hover{background:var(--accent);transform:translateY(-1px)}
 
-  /* ---------- 首屏 ---------- */
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
-  .hero{padding-top:70px;padding-bottom:52px}
-  .kicker{
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--accent);display:flex;align-items:center;gap:12px;
-  }
+  .hero{padding:74px 0 48px}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px}
   .kicker::before{content:"";width:32px;height:1px;background:var(--accent)}
-  .hero h1{
-    font-family:var(--serif);font-weight:600;
-    font-size:clamp(34px,5.6vw,64px);line-height:1.16;letter-spacing:-.01em;
-    margin:22px 0 0;max-width:19em;
-  }
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(33px,5.2vw,60px);line-height:1.18;letter-spacing:-.01em;margin:22px 0 0;max-width:18em;text-wrap:balance}
   .hero h1 em{font-style:normal;color:var(--accent)}
-  .hero h1 s{text-decoration:none;color:var(--ink-3)}
-  .hero .lede{
-    font-family:var(--serif);font-size:clamp(16px,2vw,19px);line-height:1.95;
-    color:var(--ink-2);max-width:54ch;margin:26px 0 0;
-  }
-  .hero .lede strong{font-weight:600;color:var(--ink);background:linear-gradient(180deg,transparent 62%,var(--accent-soft) 62%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 2px}
-
+  .hero .lede{font-family:var(--serif);font-size:clamp(16px,1.85vw,18.5px);line-height:1.95;color:var(--ink-2);max-width:50ch;margin:26px 0 0;text-wrap:pretty}
   .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:34px}
-  .cta-note{font-size:12.5px;color:var(--ink-3);margin:14px 0 0;letter-spacing:.02em}
-
-  .metaline{
-    display:flex;flex-wrap:wrap;margin-top:48px;
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  }
-  .metaline div{flex:1 1 0;min-width:150px;padding:16px 18px 14px 0;border-right:1px solid var(--line-soft)}
+  .metaline{display:flex;flex-wrap:wrap;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .metaline div{flex:1 1 0;min-width:138px;padding:15px 18px 13px 0;border-right:1px solid var(--line-soft)}
   .metaline div:last-child{border-right:0}
-  .metaline .n{font-family:var(--serif);font-size:30px;line-height:1;color:var(--accent);display:block}
-  .metaline .l{font-size:12.5px;color:var(--ink-3);margin-top:7px;display:block;letter-spacing:.02em}
+  .metaline .n{font-family:var(--serif);font-size:29px;line-height:1;color:var(--accent);display:block}
+  .metaline .l{font-size:12.5px;color:var(--ink-3);margin-top:6px;display:block}
 
-  /* ---------- 引言横带 ---------- */
-  .band{background:var(--ink);color:#F6F1E6;padding:48px 40px}
-  .band-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:44px;align-items:center;flex-wrap:wrap}
-  .band p{font-family:var(--serif);font-size:clamp(20px,2.9vw,30px);line-height:1.6;margin:0;flex:1 1 440px}
+  .band{background:var(--ink);color:#F6F1E6;padding:36px 40px}
+  .band-in{max-width:var(--maxw);margin:0 auto;display:flex;gap:40px;align-items:center;flex-wrap:wrap}
+  .band p{font-family:var(--serif);font-size:clamp(19px,2.6vw,27px);line-height:1.6;margin:0;flex:1 1 400px}
   .band p em{font-style:normal;color:#E9A88F}
-  .band .tail{
-    font-family:var(--sans);font-size:14px;color:#A9A296;max-width:34ch;margin:0;line-height:1.75;
-    border-left:1px solid rgba(255,255,255,.18);padding-left:22px;
-  }
+  .band .tail{font-family:var(--sans);font-size:13.5px;color:#A9A296;max-width:30ch;margin:0;line-height:1.75;border-left:1px solid rgba(255,255,255,.18);padding-left:22px}
 
-  /* ---------- 章节 ---------- */
-  .sec{padding:76px 0 8px}
-  .sec-head{margin-bottom:34px}
-  .sec-kicker{
-    font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--accent);margin-bottom:12px;
-  }
-  .sec h2{
-    font-family:var(--serif);font-size:clamp(24px,3.2vw,34px);font-weight:600;
-    line-height:1.38;margin:0 0 12px;letter-spacing:-.01em;
-  }
-  .sec .sub{color:var(--ink-3);font-size:14.5px;margin:0;max-width:64ch}
+  .layout{max-width:var(--maxw);margin:0 auto;padding:0 40px 96px;display:grid;grid-template-columns:212px minmax(0,1fr);gap:64px;align-items:start}
+  .side{position:sticky;top:64px;padding:16px 0 40px;max-height:calc(100vh - 64px);display:flex;flex-direction:column}
+  .side .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .side nav{display:flex;flex-direction:column}
+  .side nav a{display:flex;gap:11px;align-items:baseline;padding:8px 0 8px 13px;font-size:13.5px;color:var(--ink-3);line-height:1.5;border-left:2px solid transparent;transition:color .2s,border-color .2s,background .2s}
+  .side nav a .i{font-family:var(--mono);font-size:10.5px;opacity:.7}
+  .side nav a:hover{color:var(--ink);background:rgba(23,22,15,.025)}
+  .side nav a.on{color:var(--accent);border-left-color:var(--accent);font-weight:600;background:linear-gradient(90deg,rgba(168,58,36,.07),transparent)}
+  .side nav a.on .i{opacity:1}
+  .prog{padding:20px 0 0;margin-top:16px;border-top:1px solid var(--line)}
+  .prog .lab{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+  .prog .lab b{color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.06em}
+  .prog .track{height:2px;background:var(--line);margin-top:9px;overflow:hidden}
+  .prog .fill{height:100%;width:0;background:var(--accent);transition:width .12s linear}
+  .side .more{margin-top:22px;font-size:12.5px;color:var(--ink-3);line-height:1.8}
+  .side .more a{border-bottom:1px solid var(--line)}
+  .side .more a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+  .main{min-width:0}
 
-  /* ---------- 对照表 ---------- */
+  .sec{padding:0 0 66px;scroll-margin-top:80px}
+  .sec-head{display:flex;align-items:flex-start;gap:15px;margin-bottom:8px}
+  .sec-no{font-family:var(--serif);font-size:40px;line-height:.92;color:transparent;-webkit-text-stroke:1px var(--line);flex:0 0 auto;transform:translateY(2px)}
+  .sec h2{font-family:var(--serif);font-size:clamp(22px,2.7vw,29px);font-weight:600;margin:0;line-height:1.36;letter-spacing:-.01em}
+  .sec .sub{color:var(--ink-3);font-size:14px;margin:10px 0 0;max-width:62ch}
+  .rule{height:1px;background:var(--line);margin:20px 0 28px}
+  .sec p{color:var(--ink-2)}
+  .note{font-size:13.5px;color:var(--ink-3);border-left:2px solid var(--line);padding-left:14px;margin-top:24px}
+
   .cmpwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table.cmp{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
-  table.cmp th,table.cmp td{text-align:left;padding:16px 18px;vertical-align:top;border-bottom:1px solid var(--line-soft)}
-  table.cmp thead th{
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-3);border-bottom:1px solid var(--line);padding-bottom:12px;white-space:nowrap;
-  }
+  table.cmp{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  table.cmp th,table.cmp td{text-align:left;padding:15px 16px;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+  table.cmp thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line);padding-bottom:11px;white-space:nowrap}
   table.cmp thead th.us{color:var(--accent)}
-  table.cmp td:first-child{
-    font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);
-    white-space:nowrap;width:1%;
-  }
-  table.cmp td.old{color:var(--ink-3);font-size:13.6px}
+  table.cmp td:first-child{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;width:1%}
+  table.cmp td.old{color:var(--ink-3);font-size:13.4px}
   table.cmp td.us{color:var(--ink);background:rgba(168,58,36,.028);font-weight:500}
-  table.cmp td.us b{color:var(--accent);font-weight:600}
-  table.cmp tbody tr:hover td{background:rgba(23,22,15,.018)}
+  table.cmp td.us b{color:var(--accent)}
+  table.cmp tbody tr:hover td{background:rgba(23,22,15,.016)}
   table.cmp tbody tr:hover td.us{background:rgba(168,58,36,.055)}
 
-  /* ---------- 四个反直觉设计 ---------- */
   .dcards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-  .dcard{background:var(--paper-raise);padding:30px 30px 32px;transition:background .25s}
+  .dcard{background:var(--raise);padding:26px 26px 28px;transition:background .25s}
   .dcard:hover{background:#FFFCF7}
-  .dcard .no{
-    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent);
-  }
-  .dcard h3{font-family:var(--serif);font-size:20px;font-weight:600;margin:12px 0 10px;line-height:1.45}
-  .dcard .why{font-size:14px;color:var(--ink-2);margin:0;line-height:1.8}
-  .dcard .why b{color:var(--ink)}
-  .dcard .tagline{
-    display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;
-    letter-spacing:.06em;color:var(--accent);border-bottom:1px solid rgba(168,58,36,.3);padding-bottom:2px;
-  }
+  .dcard .no{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--accent)}
+  .dcard h3{font-family:var(--serif);font-size:18.5px;font-weight:600;margin:11px 0 9px;line-height:1.45}
+  .dcard p{font-size:13.6px;color:var(--ink-2);margin:0;line-height:1.78}
+  .dcard p b{color:var(--ink)}
+  .dcard .tg{display:inline-block;margin-top:13px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--accent);border-bottom:1px solid rgba(168,58,36,.3);padding-bottom:2px}
 
-  /* ---------- 五步 ---------- */
-  .steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);background:var(--paper-raise)}
-  .stepp{padding:22px 18px 24px;border-right:1px solid var(--line-soft);transition:background .25s}
+  .steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);background:var(--raise)}
+  .stepp{padding:20px 16px 22px;border-right:1px solid var(--line-soft);transition:background .25s}
   .stepp:last-child{border-right:0}
   .stepp:hover{background:rgba(168,58,36,.035)}
-  .stepp .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--accent)}
-  .stepp h3{font-family:var(--serif);font-size:15.5px;font-weight:600;margin:9px 0 7px;line-height:1.45}
-  .stepp p{font-size:12.8px;color:var(--ink-2);margin:0;line-height:1.7}
+  .stepp .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent)}
+  .stepp h3{font-family:var(--serif);font-size:15px;font-weight:600;margin:8px 0 6px;line-height:1.45}
+  .stepp p{font-size:12.5px;color:var(--ink-2);margin:0;line-height:1.65}
+  .stepnotes{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+  .pill{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:5px 11px;border:1px solid var(--line);color:var(--ink-2);background:var(--raise)}
+  .pill.hot{border-color:rgba(168,58,36,.32);color:var(--accent);background:rgba(168,58,36,.05)}
 
-  /* ---------- 证据 ---------- */
-  .lawhead{display:flex;align-items:baseline;gap:14px;margin:0 0 16px;flex-wrap:wrap}
-  .lawhead h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0}
-  .lawhead span{font-size:13px;color:var(--ink-3);max-width:56ch}
-  .lawgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-  .lawb{border:1px solid var(--line);background:var(--paper-raise);padding:11px 13px;transition:border-color .2s,transform .2s}
+  .lawgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+  .lawb{border:1px solid var(--line);background:var(--raise);padding:11px 12px;transition:border-color .2s,transform .2s}
   .lawb:hover{border-color:rgba(168,58,36,.35);transform:translateY(-2px)}
   .lawb .c{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--accent);font-weight:600}
-  .lawb .t{font-size:13.2px;color:var(--ink);margin-top:4px;line-height:1.5}
-
-  .deliver{margin-top:46px;border-top:1px solid var(--line);padding-top:32px}
-  .deliver h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 18px}
-  .dlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px}
-  .dlist li{
-    display:grid;grid-template-columns:16px 1fr;gap:8px;
-    font-size:14px;color:var(--ink-2);line-height:1.7;
-    padding-bottom:12px;border-bottom:1px solid var(--line-soft);
-  }
-  .dlist li::before{content:"·";color:var(--accent);font-weight:700;font-size:20px;line-height:1.05}
+  .lawb .t{font-size:13px;color:var(--ink);margin-top:4px;line-height:1.5}
+  .deliver{margin-top:40px;border-top:1px solid var(--line);padding-top:28px}
+  .deliver h3{font-family:var(--serif);font-size:18px;font-weight:600;margin:0 0 14px}
+  .dlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 32px}
+  .dlist li{display:grid;grid-template-columns:14px 1fr;gap:8px;font-size:13.8px;color:var(--ink-2);line-height:1.7;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+  .dlist li::before{content:"·";color:var(--accent);font-weight:700;font-size:19px;line-height:1.05}
   .dlist b{color:var(--ink);font-weight:600}
   code{font-family:var(--mono);font-size:.86em;background:rgba(23,22,15,.05);padding:1px 4px;border-radius:2px}
 
-  /* ---------- 三条坑 ---------- */
   .cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-  .case{background:var(--paper-raise);padding:26px 24px 28px}
+  .case{background:var(--raise);padding:24px 22px 26px}
   .case .r{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent)}
-  .case h3{font-family:var(--serif);font-size:17px;font-weight:600;margin:10px 0 10px;line-height:1.5}
-  .case .scene{font-size:13.4px;color:var(--ink-2);margin:0;line-height:1.8}
-  .case .scene em{font-style:normal;color:var(--ink);background:linear-gradient(180deg,transparent 62%,var(--accent-soft) 62%)}
+  .case h3{font-family:var(--serif);font-size:16.5px;font-weight:600;margin:9px 0 9px;line-height:1.5}
+  .case p{font-size:13.2px;color:var(--ink-2);margin:0;line-height:1.78}
+  .case em{font-style:normal;color:var(--ink);background:linear-gradient(180deg,transparent 62%,var(--accent-soft) 62%)}
 
-  /* ---------- 适合 / 不适合 ---------- */
   .fit{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-  .fit > div{background:var(--paper-raise);padding:28px 26px 30px}
-  .fit h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 16px;display:flex;align-items:center;gap:9px}
-  .fit .mark{width:20px;height:20px;display:grid;place-items:center;border-radius:50%;font-size:12px;line-height:1;color:#fff;flex:0 0 auto}
+  .fit > div{background:var(--raise);padding:24px 24px 26px}
+  .fit h3{font-family:var(--serif);font-size:17.5px;font-weight:600;margin:0 0 14px;display:flex;align-items:center;gap:9px}
+  .fit .mark{width:19px;height:19px;display:grid;place-items:center;border-radius:50%;font-size:11px;line-height:1;color:#fff;flex:0 0 auto}
   .fit .yes{background:var(--jade)}
   .fit .no{background:#B9B2A2}
   .fit ul{list-style:none;margin:0;padding:0}
-  .fit li{font-size:14px;color:var(--ink-2);line-height:1.75;padding:9px 0;border-bottom:1px dashed var(--line-soft)}
+  .fit li{font-size:13.8px;color:var(--ink-2);line-height:1.72;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
   .fit li:last-child{border-bottom:0}
   .fit li b{color:var(--ink)}
 
-  /* ---------- 联系作者 ---------- */
-  .get-sec{padding:84px 0 0}
-  .getcard{
-    border:1px solid var(--line);
-    background:radial-gradient(640px 320px at 86% -12%, rgba(168,58,36,.10), transparent 70%),var(--paper-raise);
-    padding:54px 50px 48px;
-    display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;
-  }
-  .getcard .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent)}
-  .getcard h2{
-    font-family:var(--serif);font-size:clamp(25px,3.4vw,36px);font-weight:600;
-    margin:14px 0 14px;line-height:1.34;letter-spacing:-.01em;
-  }
-  .getcard .say{font-size:15px;color:var(--ink-2);max-width:42ch;margin:0 0 26px}
-  .getactions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .mailbox{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:var(--mono);font-size:13px;color:var(--ink-2);
-    border:1px dashed var(--line);padding:11px 15px;background:rgba(255,255,255,.5);
-  }
-  .mailbox b{color:var(--ink);font-weight:600;cursor:pointer}
-  .howto{list-style:none;margin:0;padding:0;counter-reset:s}
-  .howto li{counter-increment:s;position:relative;padding:0 0 20px 42px;font-size:14px;color:var(--ink-2);line-height:1.7}
-  .howto li::before{
-    content:counter(s);position:absolute;left:0;top:0;
-    width:26px;height:26px;border-radius:50%;border:1px solid var(--line);
-    display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--paper);
-  }
-  .howto li:last-child{padding-bottom:0}
-  .howto b{color:var(--ink)}
-
-  /* ---------- FAQ ---------- */
   .faq{border-top:1px solid var(--line)}
   .faq details{border-bottom:1px solid var(--line-soft)}
-  .faq summary{
-    list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;
-    padding:19px 4px;font-family:var(--serif);font-size:16.5px;font-weight:600;color:var(--ink);
-    transition:color .2s;
-  }
+  .faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:15px;padding:18px 4px;font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);transition:color .2s}
   .faq summary::-webkit-details-marker{display:none}
   .faq summary:hover{color:var(--accent)}
   .faq summary .q{font-family:var(--mono);font-size:11px;color:var(--ink-3);flex:0 0 auto;letter-spacing:.08em}
   .faq summary .plus{margin-left:auto;font-family:var(--mono);color:var(--ink-3);transition:transform .25s,color .2s;flex:0 0 auto}
   .faq details[open] summary .plus{transform:rotate(45deg);color:var(--accent)}
-  .faq .ans{padding:0 4px 22px 42px;font-size:14.2px;color:var(--ink-2);line-height:1.85}
+  .faq .ans{padding:0 4px 20px 40px;font-size:14px;color:var(--ink-2);line-height:1.85}
   .faq .ans b{color:var(--ink)}
 
-  /* ---------- 页脚 ---------- */
-  footer{margin-top:92px;border-top:1px solid var(--line)}
-  .foot{
-    max-width:var(--maxw);margin:0 auto;padding:40px 40px 58px;
-    display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:baseline;
-  }
-  .foot .b{font-family:var(--serif);font-size:15.5px;color:var(--ink)}
+  .contact{padding:0 0 6px;scroll-margin-top:80px}
+  .contact-card{border:1px solid var(--line);background:radial-gradient(560px 280px at 88% -14%, rgba(168,58,36,.10), transparent 70%),var(--raise);padding:46px 44px 42px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap}
+  .contact-card .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .contact-card h2{font-family:var(--serif);font-size:clamp(22px,2.8vw,30px);font-weight:600;margin:0;line-height:1.4;letter-spacing:-.01em;max-width:18em}
+  .contact-card .acts{display:flex;gap:12px;flex-wrap:wrap}
+
+  .end{display:flex;align-items:center;gap:16px;margin:6px 0 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase}
+  .end::before,.end::after{content:"";height:1px;background:var(--line);flex:1 1 auto}
+  footer{border-top:1px solid var(--line);margin-top:40px}
+  .foot{max-width:var(--maxw);margin:0 auto;padding:28px 40px 44px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
+  .foot .b{font-family:var(--serif);font-size:15px;color:var(--ink)}
   .foot .b em{font-style:normal;color:var(--accent)}
-  .foot .m{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);line-height:2;text-align:right}
-  .foot .m a{color:var(--ink-2);border-bottom:1px solid var(--line)}
-  .foot .m a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+  .foot .m{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);line-height:2;text-align:right}
 
-  /* ---------- 提示条 ---------- */
-  .toast{
-    position:fixed;left:50%;bottom:36px;transform:translate(-50%,16px);
-    background:var(--ink);color:#F6F1E6;font-size:13.5px;padding:11px 22px;border-radius:2px;
-    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:80;
-    box-shadow:0 14px 34px -18px rgba(0,0,0,.7);
-  }
-  .toast.show{opacity:1;transform:translate(-50%,0)}
-
-  /* ---------- 动效 ---------- */
-  .reveal{opacity:0;transform:translateY(16px)}
-  .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+  .reveal{opacity:0;transform:translateY(14px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.3,1)}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .reveal,.reveal.in{opacity:1;transform:none;transition:none}
   }
 
-  /* ---------- 响应式 ---------- */
-  @media (max-width:1000px){
+  @media (max-width:1040px){
+    .layout{grid-template-columns:178px minmax(0,1fr);gap:44px}
     .dcards{grid-template-columns:1fr}
+    .lawgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .cases{grid-template-columns:1fr}
+  }
+  @media (max-width:900px){
+    .layout{display:block;padding-bottom:70px}
+    .side{position:sticky;top:64px;z-index:40;max-height:none;margin:0 -24px 4px;padding:0;background:rgba(250,247,240,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .side .t,.side .more{display:none}
+    .side nav{flex-direction:row;overflow-x:auto;gap:0;padding:9px 24px 0;scrollbar-width:none}
+    .side nav::-webkit-scrollbar{display:none}
+    .side nav a{border-left:0;border-bottom:2px solid transparent;padding:5px 12px 7px;white-space:nowrap;font-size:13px;background:none}
+    .side nav a.on{border-bottom-color:var(--accent);background:none}
+    .side nav a .i{display:none}
+    .prog{margin:0;padding:0;border:0}
+    .prog .lab{display:none}
+    .prog .track{margin:0;height:2px}
     .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
     .stepp{border-bottom:1px solid var(--line-soft)}
     .stepp:nth-child(2n){border-right:0}
-    .lawgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .cases{grid-template-columns:1fr}
-    .getcard{grid-template-columns:1fr;gap:36px;padding:42px 32px}
+    .fit{grid-template-columns:1fr}
+    .contact-card{padding:34px 26px 32px}
   }
   @media (max-width:820px){
-    .topbar{padding:0 24px;gap:14px}
-    .topnav{display:none}
+    .topbar{padding:0 24px}
     .wrap{padding:0 24px}
-    .band{padding:42px 24px}
-    .band .tail{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;max-width:none}
-    .fit{grid-template-columns:1fr}
-    .dlist{grid-template-columns:1fr}
+    .band{padding:32px 24px}
+    .band .tail{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.18);padding-top:14px;max-width:none}
+    .hero{padding-top:48px}
     .lawgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .sec{padding-top:58px}
-    .hero{padding-top:46px}
+    .dlist{grid-template-columns:1fr}
+    .sec{padding-bottom:54px}
   }
   @media (max-width:560px){
-    .metaline div{flex:1 1 46%;border-right:0;border-bottom:1px solid var(--line-soft);padding:14px 0}
-    .metaline div:nth-child(2n){padding-left:16px}
+    .metaline div{flex:1 1 46%;border-right:0;border-bottom:1px solid var(--line-soft);padding:13px 0}
+    .metaline div:nth-child(2n){padding-left:14px}
     .steps{grid-template-columns:1fr}
     .stepp{border-right:0}
-    .getcard{padding:34px 22px}
     .btn{width:100%}
-    .mailbox{width:100%;justify-content:center}
+    .contact-card .acts{width:100%}
     .foot .m{text-align:left}
+    .topact .tbtn:first-child{display:none}
   }
 </style>
 </head>
@@ -336,33 +252,25 @@
 
 <header class="topbar" id="topbar">
   <a class="logo" href="#top">My<i>_</i>Skill</a>
-  <nav class="topnav">
-    <a href="#diff">差在哪</a>
-    <a href="#design">四个反直觉设计</a>
-    <a href="#how">它怎么走</a>
-    <a href="#proof">里面有什么</a>
-  </nav>
-  <a class="btn-mini" href="#contact">联系作者</a>
+  <div class="topact">
+    <a class="tbtn" data-mail href="#">联系作者</a>
+    <a class="tbtn solid" href="https://github.com/yanliyounivv/my-dev-skills" target="_blank" rel="noopener">GitHub</a>
+  </div>
 </header>
 
 <main id="top">
 
-  <!-- ============ 首屏 ============ -->
   <section class="hero wrap">
     <div class="kicker">给 AI 编程助手的一套硬约束</div>
     <h1>计划模式人人都有。<br>这套管的是<em>计划之后</em>的事。</h1>
     <p class="lede">
       规则打架听谁的、同一条错第三次还试不试、规则写到第 50 条会不会自相矛盾、
-      AI 说「改好了」凭什么算过——这四件事每天都在出事，
-      而绝大多数提示词里<b>没有答案</b>。这里有，而且能被脚本验。
+      AI 说「改好了」凭什么算过——这四件事每天在出事，而大多数提示词里没有答案。
     </p>
-
     <div class="cta-row">
-      <a class="btn btn-accent" href="#contact">联系作者</a>
-      <a class="btn btn-ghost" href="guide.html">看完整原理</a>
+      <a class="btn btn-ink" href="https://github.com/yanliyounivv/my-dev-skills" target="_blank" rel="noopener">在 GitHub 查看</a>
+      <a class="btn btn-ghost" data-mail href="#">联系作者</a>
     </div>
-    <p class="cta-note">两个 skill，装进 AI 编程助手的 skills 目录即可用，不需要 API、不需要服务器。</p>
-
     <div class="metaline">
       <div><span class="n">2</span><span class="l">skill 分工：顺序 × 质量</span></div>
       <div><span class="n">21</span><span class="l">硬约束：5 流程 + 16 铁律</span></div>
@@ -371,7 +279,6 @@
     </div>
   </section>
 
-  <!-- ============ 引言横带 ============ -->
   <div class="band">
     <div class="band-in">
       <p>按计划写代码，<em>不是按代码写 md</em></p>
@@ -379,325 +286,363 @@
     </div>
   </div>
 
-  <!-- ============ 差在哪 ============ -->
-  <section class="sec wrap" id="diff">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">The difference</div>
-      <h2>「先计划后动手」只是第 0 步</h2>
-      <p class="sub">真正每天出问题的，是计划之后的那五件事。左边是常见做法，右边是这里的规定——每一条都能在文件里查到原文。</p>
-    </div>
+  <div class="layout">
 
-    <div class="cmpwrap reveal">
-      <table class="cmp">
-        <thead>
-          <tr>
-            <th>情境</th>
-            <th>常见做法</th>
-            <th class="us">这套的规定</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>规则打架</td>
-            <td class="old">没有裁决，AI 挑对自己方便的那条执行</td>
-            <td class="us">六级优先级 P0–P5 + 三条元规则，先判<b>是「顺序」还是「质量」</b>问题</td>
-          </tr>
-          <tr>
-            <td>连续失败</td>
-            <td class="old">换个写法再试，试到通为止</td>
-            <td class="us">同一条<b>失败 2 次必须停</b>下来汇报，禁止第 3 次盲试</td>
-          </tr>
-          <tr>
-            <td>规则与事实</td>
-            <td class="old">规则说了算，代码不对是代码的问题</td>
-            <td class="us">当轮<b>以实测为准</b>，收尾回头改规则并记进化日志</td>
-          </tr>
-          <tr>
-            <td>规则膨胀</td>
-            <td class="old">越写越长，最后没人读完</td>
-            <td class="us">单个 <code>SKILL.md</code> <b>≤ 7000 字节</b>，超了必须把细节下沉</td>
-          </tr>
-          <tr>
-            <td>规则质量</td>
-            <td class="old">靠人读一遍，凭感觉觉得「挺全」</td>
-            <td class="us"><b>6 项脚本校验</b>（死链/结构/版本/体量/重复/卫生）+ 5 句冒烟用例</td>
-          </tr>
-          <tr>
-            <td>你的地位</td>
-            <td class="old">规则可能反过来绑住你</td>
-            <td class="us">P0 = <b>你本次对话里的明确指令</b>，压过下面全部条款</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- ============ 四个反直觉设计 ============ -->
-  <section class="sec wrap" id="design">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">Design notes</div>
-      <h2>四个反直觉的设计</h2>
-      <p class="sub">每一条都是拿真实返工换来的，不是为了好看。</p>
-    </div>
-
-    <div class="dcards reveal">
-      <div class="dcard">
-        <div class="no">01</div>
-        <h3>确认越多，越是在浪费你</h3>
-        <p class="why">需求澄清并进出计划那一条消息，<b>确认门只留两道</b>：出计划时一次，方案拍板时一次。多一道确认，就多一次「为了确认而确认」——你要的是活干完，不是陪流程走完全程。</p>
-        <span class="tagline">对比：需求 → 计划 → 方案 → 开工</span>
+    <aside class="side">
+      <div class="t">Contents</div>
+      <nav id="toc">
+        <a href="#diff"><span class="i">01</span>差在哪</a>
+        <a href="#design"><span class="i">02</span>四个反直觉设计</a>
+        <a href="#how"><span class="i">03</span>一次任务怎么走</a>
+        <a href="#proof"><span class="i">04</span>里面有什么</a>
+        <a href="#cases"><span class="i">05</span>三条踩过的坑</a>
+        <a href="#fit"><span class="i">06</span>适合谁</a>
+        <a href="#faq"><span class="i">07</span>常见问题</a>
+        <a href="#contact"><span class="i">08</span>联系作者</a>
+      </nav>
+      <div class="prog">
+        <div class="lab"><span>Read</span><b id="pct">0%</b></div>
+        <div class="track"><div class="fill" id="fill"></div></div>
       </div>
-
-      <div class="dcard">
-        <div class="no">02</div>
-        <h3>失败两次就停，不许再试</h3>
-        <p class="why">AI 最贵的不是慢，是第 3、4、5 次盲试——<b>看起来在努力，其实在烧你的时间和 token</b>。停下来那一次汇报，往往比继续试更有用：位置、报错、已排除的可能，一次说清。</p>
-        <span class="tagline">同一条连续失败 2 次 ⇒ 停下汇报</span>
+      <div class="more">
+        想逐条看规则？<br><a href="guide.html">打开完整原理说明 →</a>
       </div>
+    </aside>
 
-      <div class="dcard">
-        <div class="no">03</div>
-        <h3>规则不许压过事实</h3>
-        <p class="why">规则和磁盘代码冲突时，<b>当轮以实测为准</b>，按真实代码办事，收尾回头改规则并记一笔。规则是给人用的工具，不是用来赢辩论的——这一条排除了「文档说应该这样，所以代码一定错」。</p>
-        <span class="tagline">规则 &lt; 实测</span>
-      </div>
-
-      <div class="dcard">
-        <div class="no">04</div>
-        <h3>规则自己也要过 CI</h3>
-        <p class="why">写规则必然会「说了 A 处、忘改 B 处」。所以带一个校验脚本查死链、结构、版本、体量、重复段落、垃圾文件；再带 5 句话验证<b>规则到底有没有被加载</b>——而不是读完文档自我安慰。</p>
-        <span class="tagline">6 项检查 + 5 句冒烟</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 怎么走 ============ -->
-  <section class="sec wrap" id="how">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">How it runs</div>
-      <h2>落到一次任务上，是这样走的</h2>
-      <p class="sub">确认门两道，其余全是按编号干活、按编号验证。</p>
-    </div>
-
-    <div class="steps reveal">
-      <div class="stepp">
-        <div class="k">STEP 01</div>
-        <h3>出计划 · 复述理解</h3>
-        <p>问清目标端、代码范围、验收方式，给范围、验收点、风险。</p>
-      </div>
-      <div class="stepp">
-        <div class="k">STEP 02</div>
-        <h3>拍板 · 拆任务</h3>
-        <p>2~3 个方案附推荐，落成 T1…Tn，每条带验收点与依赖。</p>
-      </div>
-      <div class="stepp">
-        <div class="k">STEP 03</div>
-        <h3>逐条写 · 当场验</h3>
-        <p>一条没过不进下一条；失败 2 次停下汇报。</p>
-      </div>
-      <div class="stepp">
-        <div class="k">STEP 04</div>
-        <h3>审计 · 分级</h3>
-        <p>只认磁盘代码与实测，问题按 P0–P3，标到行号。</p>
-      </div>
-      <div class="stepp">
-        <div class="k">STEP 05</div>
-        <h3>收尾 · 一次补齐</h3>
-        <p>横向扫同类一次汇报；日志、契约、流程图一起更新。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 里面有什么 ============ -->
-  <section class="sec wrap" id="proof">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">What's inside</div>
-      <h2>16 条铁律，每条都能按编号回指</h2>
-      <p class="sub">问「R03 是什么」永远有确定答案；违反哪一条，日志和审计里写编号就行，不用再吵一遍。</p>
-    </div>
-
-    <div class="lawgrid reveal">
-      <div class="lawb"><div class="c">R01</div><div class="t">没理解不动手</div></div>
-      <div class="lawb"><div class="c">R02</div><div class="t">只看代码不看文档</div></div>
-      <div class="lawb"><div class="c">R03</div><div class="t">修一处必扫同类</div></div>
-      <div class="lawb"><div class="c">R04</div><div class="t">不重复索要已给信息</div></div>
-      <div class="lawb"><div class="c">R05</div><div class="t">不原地空想</div></div>
-      <div class="lawb"><div class="c">R06</div><div class="t">占位不许当实现</div></div>
-      <div class="lawb"><div class="c">R07</div><div class="t">环境噪音不当缺陷</div></div>
-      <div class="lawb"><div class="c">R08</div><div class="t">启动完必须验证</div></div>
-      <div class="lawb"><div class="c">R09</div><div class="t">文件一致不等于对</div></div>
-      <div class="lawb"><div class="c">R10</div><div class="t">无假数据</div></div>
-      <div class="lawb"><div class="c">R11</div><div class="t">无死按钮无断流程</div></div>
-      <div class="lawb"><div class="c">R12</div><div class="t">契约五方对齐</div></div>
-      <div class="lawb"><div class="c">R13</div><div class="t">状态全中文</div></div>
-      <div class="lawb"><div class="c">R14</div><div class="t">证据三选一</div></div>
-      <div class="lawb"><div class="c">R15</div><div class="t">功能分级标注</div></div>
-      <div class="lawb"><div class="c">R16</div><div class="t">部署提交等指令</div></div>
-    </div>
-
-    <div class="deliver reveal">
-      <h3>你会收到什么</h3>
-      <ul class="dlist">
-        <li><span><b>两个 skill 包</b>：<code>my-dev-workflow</code>（管顺序）与 <code>my-dev-rules</code>（管质量）</span></li>
-        <li><span><b>体积受控</b>：每个 <code>SKILL.md</code> ≤ 7000 字节，细节下沉到参考文档，不白烧上下文</span></li>
-        <li><span><b>23 篇参考</b>：分端技术红线、产品体验、交付规范、6 篇阶段 SOP、日志与 ADR 模板</span></li>
-        <li><span><b>校验脚本</b>：一条命令跑六项检查，改规则不再靠自觉</span></li>
-        <li><span><b>5 句冒烟用例</b>：验证规则有没有被真正加载，而不是读一遍自我安慰</span></li>
-        <li><span><b>维护链</b>：改源文件 → 校验 → 打包 → 同步，单向，附版本号规则</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ============ 三条坑 ============ -->
-  <section class="sec wrap" id="cases">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">Earned, not invented</div>
-      <h2>三条只有踩过坑才写得出来的规则</h2>
-      <p class="sub">不是推演出来的。它们来自 600+ 条真实协作对话和 5 个项目的翻车记录，每条都能在案例库里找到出处。</p>
-    </div>
-
-    <div class="cases reveal">
-      <div class="case">
-        <div class="r">R03</div>
-        <h3>修一处，必扫同类</h3>
-        <p class="scene">头像上传在个人页修好了，就报了完成——可另外六个页面还在读旧字段。<em>「修好了一处」最像完成，也最容易骗过验收。</em></p>
-      </div>
-      <div class="case">
-        <div class="r">R07</div>
-        <h3>环境噪音不当缺陷</h3>
-        <p class="scene">一条依赖报错，改配置、删 <code>node_modules</code>、重装依赖全试一遍——其实只是没在正确目录下跑。<em>先判性质，别为误报改业务代码。</em></p>
-      </div>
-      <div class="case">
-        <div class="r">R09</div>
-        <h3>文件一致不等于对</h3>
-        <p class="scene">md5 对上了就宣布样式生效，实际被 CSS 层叠覆盖。<em>文件相同和渲染正确，是两件事。</em></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 适合谁 ============ -->
-  <section class="sec wrap" id="fit">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">Fit</div>
-      <h2>说清楚不适合谁，比说它好更重要</h2>
-      <p class="sub">这套东西的价值在于能被你改成自己的规范。</p>
-    </div>
-
-    <div class="fit reveal">
-      <div>
-        <h3><span class="mark yes">✓</span>适合你，如果你</h3>
-        <ul>
-          <li>天天让 AI 写代码，但每次都要返工同样的几件事</li>
-          <li>同时做小程序、后台、后端，<b>契约总对不上</b></li>
-          <li>受够了「看起来很完整、点下去没反应」</li>
-          <li>想把交付做成<b>可审计</b>的，而不是一句「我改好了」</li>
-          <li>愿意花十分钟，把规则改成自己的口味</li>
-        </ul>
-      </div>
-      <div>
-        <h3><span class="mark no">✗</span>不适合你，如果你</h3>
-        <ul>
-          <li>只想让 AI 写个一次性脚本，不需要流程</li>
-          <li>期待装上就懂你的业务黑话——它管流程与质量，<b>不管业务知识</b></li>
-          <li>希望 AI 自动替你决定技术选型、报价、上线时间</li>
-          <li>不打算读一眼规则，只想复制粘贴完事</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 联系作者 ============ -->
-  <section class="get-sec wrap" id="contact">
-    <div class="getcard reveal">
-      <div>
-        <div class="eyebrow">Contact</div>
-        <h2>想要，或者想先问一句</h2>
-        <p class="say">这套东西已经开源。想直接拿去用、想按你团队的习惯改一版、或者不确定装不装得进你正在用的工具，都可以直接找我。</p>
-
-        <div class="getactions">
-          <a class="btn btn-accent" data-mail href="#">写邮件给作者</a>
-          <a class="btn btn-ghost" href="https://github.com/yanliyounivv/my-dev-skills" target="_blank" rel="noopener">在 GitHub 查看</a>
+    <div class="main">
+      <section class="sec" id="diff">
+        <div class="sec-head">
+          <span class="sec-no">01</span>
+          <div>
+            <h2>「先计划后动手」只是第 0 步</h2>
+            <p class="sub">真正每天出问题的是计划之后那几件事。左边是常见做法，右边是这里的规定——每一条都能在文件里查到原文。</p>
+          </div>
         </div>
-        <p class="cta-note">邮箱 <b id="mailText" title="点击复制" style="cursor:pointer">3444203051@qq.com</b> · 点按钮会唤起邮件客户端，收件人与主题已填好，也可点邮箱复制。</p>
-      </div>
+        <div class="rule"></div>
 
-      <div>
-        <ol class="howto">
-          <li><b>先说场景</b>：你在做什么项目、卡在哪，比「你好我想要」有用得多。</li>
-          <li><b>我给判断</b>：适不适合你用、哪几条该照你的习惯改，我直说。</li>
-          <li><b>再谈落地</b>：决定要用了，再说怎么装、怎么改成你自己的规范。</li>
-        </ol>
-      </div>
-    </div>
-  </section>
+        <div class="cmpwrap reveal">
+          <table class="cmp">
+            <thead>
+              <tr><th>情境</th><th>常见做法</th><th class="us">这套的规定</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>规则打架</td>
+                <td class="old">没有裁决，AI 挑对自己方便的那条执行</td>
+                <td class="us">六级优先级 P0–P5 + 三条元规则，先判<b>是「顺序」还是「质量」</b>问题</td>
+              </tr>
+              <tr>
+                <td>连续失败</td>
+                <td class="old">换个写法再试，试到通为止</td>
+                <td class="us">同一条<b>失败 2 次必须停</b>下来汇报，禁止第 3 次盲试</td>
+              </tr>
+              <tr>
+                <td>规则与事实</td>
+                <td class="old">规则说了算，代码不对是代码的问题</td>
+                <td class="us">当轮<b>以实测为准</b>，收尾回头改规则并记进化日志</td>
+              </tr>
+              <tr>
+                <td>规则膨胀</td>
+                <td class="old">越写越长，最后没人读完</td>
+                <td class="us">单个 <code>SKILL.md</code> <b>≤ 7000 字节</b>，超了必须把细节下沉</td>
+              </tr>
+              <tr>
+                <td>规则质量</td>
+                <td class="old">靠人读一遍，凭感觉觉得「挺全」</td>
+                <td class="us"><b>6 项脚本校验</b>（死链 / 结构 / 版本 / 体量 / 重复 / 卫生）+ 5 句冒烟用例</td>
+              </tr>
+              <tr>
+                <td>你的地位</td>
+                <td class="old">规则可能反过来绑住你</td>
+                <td class="us">P0 = <b>你本次对话里的明确指令</b>，压过下面全部条款</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-  <!-- ============ FAQ ============ -->
-  <section class="sec wrap" id="faq">
-    <div class="sec-head reveal">
-      <div class="sec-kicker">FAQ</div>
-      <h2>你大概会问这几句</h2>
-    </div>
+      <section class="sec" id="design">
+        <div class="sec-head">
+          <span class="sec-no">02</span>
+          <div>
+            <h2>四个反直觉的设计</h2>
+            <p class="sub">每一条都是拿真实返工换来的，不是为了好看。</p>
+          </div>
+        </div>
+        <div class="rule"></div>
 
-    <div class="faq reveal">
-      <details open>
-        <summary><span class="q">Q1</span>支持哪些 AI 工具？<span class="plus">＋</span></summary>
-        <div class="ans">面向支持 <code>SKILL.md</code> / skills 目录机制的 AI 编程助手。不支持该机制的，可以把 <code>SKILL.md</code> 贴进系统提示词、参考文档按需再喂——效果会打折，但核心门禁还在。</div>
-      </details>
-      <details>
-        <summary><span class="q">Q2</span>会不会反过来限制我自己？<span class="plus">＋</span></summary>
-        <div class="ans">不会。优先级里 <b>P0 是「你本次对话里的明确指令」</b>，压过所有条款。你说「先列需求别改代码」，它就停在设计层；不想用了删掉目录即可，不留残留。</div>
-      </details>
-      <details>
-        <summary><span class="q">Q3</span>我自己改了规则，更新会覆盖吗？<span class="plus">＋</span></summary>
-        <div class="ans">不会自动覆盖。整套是单向链：改源文件 → 六项校验 → 打包 → 你手动同步。你改过的内容只有在你主动同步时才会被动到。</div>
-      </details>
-      <details>
-        <summary><span class="q">Q4</span>能改成我自己的规范吗？<span class="plus">＋</span></summary>
-        <div class="ans">本来就该这么用。<code>SKILL.md</code> 只放「每次都必须遵守」的内容，细节全在参考文档里，替换一段成本很低；改完跑一遍校验脚本就知道有没有写漏。</div>
-      </details>
-    </div>
+        <div class="dcards reveal">
+          <div class="dcard">
+            <div class="no">01</div>
+            <h3>确认越多，越是在浪费你</h3>
+            <p>需求澄清并进出计划那一条消息，<b>确认门只留两道</b>：出计划时一次，方案拍板时一次。多一道确认，就多一次「为了确认而确认」——你要的是活干完，不是陪流程走完全程。</p>
+            <span class="tg">对比：需求 → 计划 → 方案 → 开工</span>
+          </div>
+          <div class="dcard">
+            <div class="no">02</div>
+            <h3>失败两次就停，不许再试</h3>
+            <p>AI 最贵的不是慢，是第 3、4、5 次盲试——<b>看起来在努力，其实在烧你的时间和 token</b>。停下来那一次汇报往往更有用：位置、报错、已排除的可能，一次说清。</p>
+            <span class="tg">同一条连续失败 2 次 ⇒ 停下汇报</span>
+          </div>
+          <div class="dcard">
+            <div class="no">03</div>
+            <h3>规则不许压过事实</h3>
+            <p>规则和磁盘代码冲突时，<b>当轮以实测为准</b>，按真实代码办事，收尾回头改规则并记一笔。规则是给人用的工具，不是用来赢辩论的——这一条直接排除了「文档说应该这样，所以代码一定错」。</p>
+            <span class="tg">规则 &lt; 实测</span>
+          </div>
+          <div class="dcard">
+            <div class="no">04</div>
+            <h3>规则自己也要过 CI</h3>
+            <p>写规则必然会「说了 A 处、忘改 B 处」。所以带一个校验脚本查死链、结构、版本、体量、重复段落、垃圾文件；再带 5 句话验证<b>规则到底有没有被加载</b>——而不是读完文档自我安慰。</p>
+            <span class="tg">6 项检查 + 5 句冒烟</span>
+          </div>
+        </div>
+      </section>
 
-    <div class="cta-row reveal" style="margin-top:44px">
-      <a class="btn btn-accent" href="#contact">联系作者</a>
-      <a class="btn btn-ghost" href="guide.html">看完整原理说明</a>
+      <section class="sec" id="how">
+        <div class="sec-head">
+          <span class="sec-no">03</span>
+          <div>
+            <h2>落到一次任务上，是这样走的</h2>
+            <p class="sub">确认门两道，其余全是按编号干活、按编号验证。</p>
+          </div>
+        </div>
+        <div class="rule"></div>
+
+        <div class="steps reveal">
+          <div class="stepp">
+            <div class="k">STEP 01</div>
+            <h3>出计划 · 复述理解</h3>
+            <p>问清目标端、代码范围、验收方式，给出范围、验收点与风险。</p>
+          </div>
+          <div class="stepp">
+            <div class="k">STEP 02</div>
+            <h3>拍板 · 拆任务</h3>
+            <p>2~3 个方案附推荐，落成 T1…Tn，每条带验收点与依赖。</p>
+          </div>
+          <div class="stepp">
+            <div class="k">STEP 03</div>
+            <h3>逐条写 · 当场验</h3>
+            <p>一条没过验收点不进下一条；失败 2 次停下汇报。</p>
+          </div>
+          <div class="stepp">
+            <div class="k">STEP 04</div>
+            <h3>审计 · 分级</h3>
+            <p>只认磁盘代码与实测，问题按 P0–P3 排序，标到行号。</p>
+          </div>
+          <div class="stepp">
+            <div class="k">STEP 05</div>
+            <h3>收尾 · 一次补齐</h3>
+            <p>横向扫同类一次汇报；日志、契约、流程图一起更新到位。</p>
+          </div>
+        </div>
+
+        <div class="stepnotes reveal">
+          <span class="pill hot">没出计划不写码</span>
+          <span class="pill hot">失败 2 次必停</span>
+          <span class="pill">P0–P3 分级</span>
+          <span class="pill">证据三选一</span>
+          <span class="pill">部署等你指令</span>
+        </div>
+      </section>
+
+      <section class="sec" id="proof">
+        <div class="sec-head">
+          <span class="sec-no">04</span>
+          <div>
+            <h2>16 条铁律，每条都能按编号回指</h2>
+            <p class="sub">问「R03 是什么」永远有确定答案；违反哪一条，日志与审计里写编号就行，不用再吵一遍。</p>
+          </div>
+        </div>
+        <div class="rule"></div>
+
+        <div class="lawgrid reveal">
+          <div class="lawb"><div class="c">R01</div><div class="t">没理解不动手</div></div>
+          <div class="lawb"><div class="c">R02</div><div class="t">只看代码不看文档</div></div>
+          <div class="lawb"><div class="c">R03</div><div class="t">修一处必扫同类</div></div>
+          <div class="lawb"><div class="c">R04</div><div class="t">不重复索要已给信息</div></div>
+          <div class="lawb"><div class="c">R05</div><div class="t">不原地空想</div></div>
+          <div class="lawb"><div class="c">R06</div><div class="t">占位不许当实现</div></div>
+          <div class="lawb"><div class="c">R07</div><div class="t">环境噪音不当缺陷</div></div>
+          <div class="lawb"><div class="c">R08</div><div class="t">启动完必须验证</div></div>
+          <div class="lawb"><div class="c">R09</div><div class="t">文件一致不等于对</div></div>
+          <div class="lawb"><div class="c">R10</div><div class="t">无假数据</div></div>
+          <div class="lawb"><div class="c">R11</div><div class="t">无死按钮无断流程</div></div>
+          <div class="lawb"><div class="c">R12</div><div class="t">契约五方对齐</div></div>
+          <div class="lawb"><div class="c">R13</div><div class="t">状态全中文</div></div>
+          <div class="lawb"><div class="c">R14</div><div class="t">证据三选一</div></div>
+          <div class="lawb"><div class="c">R15</div><div class="t">功能分级标注</div></div>
+          <div class="lawb"><div class="c">R16</div><div class="t">部署提交等指令</div></div>
+        </div>
+
+        <div class="deliver reveal">
+          <h3>你会收到什么</h3>
+          <ul class="dlist">
+            <li><span><b>两个 skill 包</b>：<code>my-dev-workflow</code> 管顺序，<code>my-dev-rules</code> 管质量</span></li>
+            <li><span><b>体积受控</b>：每个 <code>SKILL.md</code> ≤ 7000 字节，细节下沉到参考文档，不白烧上下文</span></li>
+            <li><span><b>23 篇参考</b>：分端技术红线、产品体验、交付规范、6 篇阶段 SOP、日志与 ADR 模板</span></li>
+            <li><span><b>校验脚本</b>：一条命令跑六项检查，改规则不再靠自觉</span></li>
+            <li><span><b>5 句冒烟用例</b>：验证规则有没有被真正加载，而不是读一遍自我安慰</span></li>
+            <li><span><b>维护链</b>：改源文件 → 校验 → 打包 → 同步，单向，附版本号规则</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec" id="cases">
+        <div class="sec-head">
+          <span class="sec-no">05</span>
+          <div>
+            <h2>三条只有踩过坑才写得出来的规则</h2>
+            <p class="sub">不是推演出来的。它们来自 600+ 条真实协作对话和 5 个项目的翻车记录，每条都能在案例库里找到出处。</p>
+          </div>
+        </div>
+        <div class="rule"></div>
+
+        <div class="cases reveal">
+          <div class="case">
+            <div class="r">R03</div>
+            <h3>修一处，必扫同类</h3>
+            <p>头像上传在个人页修好了，就报了完成——可另外六个页面还在读旧字段。<em>「修好了一处」最像完成，也最容易骗过验收。</em></p>
+          </div>
+          <div class="case">
+            <div class="r">R07</div>
+            <h3>环境噪音不当缺陷</h3>
+            <p>一条依赖报错，改配置、删 <code>node_modules</code>、重装依赖全试一遍——其实只是没在正确目录下跑。<em>先判性质，别为误报改业务代码。</em></p>
+          </div>
+          <div class="case">
+            <div class="r">R09</div>
+            <h3>文件一致不等于对</h3>
+            <p>md5 对上了就宣布样式生效，实际被 CSS 层叠覆盖。<em>文件相同和渲染正确，是两件事。</em></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="fit">
+        <div class="sec-head">
+          <span class="sec-no">06</span>
+          <div>
+            <h2>说清楚不适合谁，比说它好更重要</h2>
+            <p class="sub">这套东西的价值在于能被你改成自己的规范；如果只想让它替你思考，它会让你失望。</p>
+          </div>
+        </div>
+        <div class="rule"></div>
+
+        <div class="fit reveal">
+          <div>
+            <h3><span class="mark yes">✓</span>适合你，如果你</h3>
+            <ul>
+              <li>天天让 AI 写代码，但每次都要返工同样的几件事</li>
+              <li>同时做小程序、后台、后端，<b>契约总对不上</b></li>
+              <li>受够了「看起来很完整、点下去没反应」</li>
+              <li>想把交付做成<b>可审计</b>的，而不是一句「我改好了」</li>
+              <li>愿意花十分钟，把规则改成自己的口味</li>
+            </ul>
+          </div>
+          <div>
+            <h3><span class="mark no">✗</span>不适合你，如果你</h3>
+            <ul>
+              <li>只想让 AI 写个一次性脚本，不需要流程</li>
+              <li>期待装上就懂你的业务黑话——它管流程与质量，<b>不管业务知识</b></li>
+              <li>希望 AI 自动替你决定技术选型、报价、上线时间</li>
+              <li>不打算读一眼规则，只想复制粘贴完事</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="faq">
+        <div class="sec-head">
+          <span class="sec-no">07</span>
+          <div>
+            <h2>你大概会问这几句</h2>
+          </div>
+        </div>
+        <div class="rule"></div>
+
+        <div class="faq reveal">
+          <details open>
+            <summary><span class="q">Q1</span>支持哪些 AI 工具？<span class="plus">＋</span></summary>
+            <div class="ans">面向支持 <code>SKILL.md</code> / skills 目录机制的 AI 编程助手。不支持该机制的，可以把 <code>SKILL.md</code> 贴进系统提示词、参考文档按需再喂——效果会打折，但核心门禁还在。</div>
+          </details>
+          <details>
+            <summary><span class="q">Q2</span>会不会反过来限制我自己？<span class="plus">＋</span></summary>
+            <div class="ans">不会。优先级里 <b>P0 是「你本次对话里的明确指令」</b>，压过所有条款。你说「先列需求别改代码」，它就停在设计层；不想用了删掉目录即可，不留残留。</div>
+          </details>
+          <details>
+            <summary><span class="q">Q3</span>我自己改了规则，更新会覆盖吗？<span class="plus">＋</span></summary>
+            <div class="ans">不会自动覆盖。整套是单向链：改源文件 → 六项校验 → 打包 → 你手动同步。你改过的内容只有在你主动同步时才会被动到。</div>
+          </details>
+          <details>
+            <summary><span class="q">Q4</span>能改成我自己的规范吗？<span class="plus">＋</span></summary>
+            <div class="ans">本来就该这么用。<code>SKILL.md</code> 只放「每次都必须遵守」的内容，细节全在参考文档里，替换一段成本很低；改完跑一遍校验脚本就知道有没有写漏。</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="contact-card reveal">
+          <div>
+            <div class="eyebrow">Contact</div>
+            <h2>想要，或者想先问一句</h2>
+          </div>
+          <div class="acts">
+            <a class="btn btn-ink" href="https://github.com/yanliyounivv/my-dev-skills" target="_blank" rel="noopener">在 GitHub 查看</a>
+            <a class="btn btn-ghost" data-mail href="#">联系作者</a>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
+
+  <div class="wrap"><div class="end">Read complete</div></div>
 
 </main>
 
 <footer>
   <div class="foot">
-    <div class="b">My<em>_</em>Skill · 管住计划之后的那五件事</div>
+    <div class="b">My<em>_</em>Skill · 计划之后的那几件事</div>
     <div class="m">
       rules v6.1 · workflow v4.1<br>
-      <a href="guide.html">完整原理</a> &nbsp;·&nbsp; <a href="#contact">联系作者</a>
+      MIT License · 2026
     </div>
   </div>
 </footer>
 
-<div class="toast" id="toast">已复制</div>
-
 <script>
 (function () {
   "use strict";
-
   var EMAIL = "3444203051@qq.com";
 
-  /* mailto：只预填主题，正文留给对方写场景 */
   document.querySelectorAll("[data-mail]").forEach(function (a) {
-    a.setAttribute("href", "mailto:" + EMAIL +
-      "?subject=" + encodeURIComponent("My_Skill 咨询"));
+    a.setAttribute("href", "mailto:" + EMAIL + "?subject=" + encodeURIComponent("My_Skill 咨询"));
   });
 
-  /* 顶栏描边 */
   var topbar = document.getElementById("topbar");
+  var links = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+  var secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  var pct = document.getElementById("pct");
+  var fill = document.getElementById("fill");
+
   function onScroll() {
-    topbar.classList.toggle("stuck", window.scrollY > 8);
+    var y = window.scrollY || document.documentElement.scrollTop;
+    topbar.classList.toggle("stuck", y > 8);
+
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, Math.max(0, y / h)) : 0;
+    if (fill) fill.style.width = (p * 100).toFixed(1) + "%";
+    if (pct) pct.textContent = Math.round(p * 100) + "%";
+
+    var cur = 0;
+    for (var i = 0; i < secs.length; i++) {
+      if (secs[i] && secs[i].getBoundingClientRect().top <= 140) cur = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle("on", i === cur); });
   }
+
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
   onScroll();
 
-  /* 渐显 */
   var reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (es) {
@@ -709,39 +654,6 @@
   } else {
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
-
-  /* 复制邮箱 */
-  var toast = document.getElementById("toast");
-  var timer = null;
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add("show");
-    clearTimeout(timer);
-    timer = setTimeout(function () { toast.classList.remove("show"); }, 1800);
-  }
-  function fallbackCopy() {
-    var ta = document.createElement("textarea");
-    ta.value = EMAIL;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "fixed";
-    ta.style.top = "-1000px";
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand("copy"); showToast("已复制邮箱"); }
-    catch (err) { showToast("复制失败，请手动选中"); }
-    document.body.removeChild(ta);
-  }
-  function copyEmail() {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(EMAIL).then(function () {
-        showToast("已复制邮箱");
-      }).catch(fallbackCopy);
-    } else {
-      fallbackCopy();
-    }
-  }
-  var mt = document.getElementById("mailText");
-  if (mt) mt.addEventListener("click", copyEmail);
 })();
 </script>
 </body>
