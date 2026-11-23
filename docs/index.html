@@ -60,19 +60,27 @@
   .btn-ghost:hover{border-color:var(--ink);background:rgba(255,255,255,.6)}
 
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
-  .hero{padding:74px 0 48px}
+  .hero{padding:92px 0 78px}
   .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px}
   .kicker::before{content:"";width:32px;height:1px;background:var(--accent)}
-  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(33px,5.2vw,60px);line-height:1.18;letter-spacing:-.01em;margin:22px 0 0;max-width:18em;text-wrap:balance}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(33px,5.2vw,60px);line-height:1.18;letter-spacing:-.01em;margin:26px 0 0;max-width:18em;text-wrap:balance}
   .hero h1 em{font-style:normal;color:var(--accent)}
   .hero h1 .mbr{display:none}
-  .hero .lede{font-family:var(--serif);font-size:clamp(16px,1.85vw,18.5px);line-height:1.95;color:var(--ink-2);max-width:50ch;margin:26px 0 0;text-wrap:pretty}
+  .hero .lede{font-family:var(--serif);font-size:clamp(16px,1.85vw,18.5px);line-height:1.95;color:var(--ink-2);max-width:50ch;margin:34px 0 0;text-wrap:pretty}
   .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:34px}
-  .scopes{margin:32px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 22px;font-size:13.2px;color:var(--ink-2);letter-spacing:.01em;line-height:1.9}
+  .scopes{margin:50px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 22px;font-size:13.2px;color:var(--ink-2);letter-spacing:.01em;line-height:1.9}
   .scopes .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-right:15px}
   .scopes span:not(.lbl){white-space:nowrap}
-  .metalabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin:30px 0 0}
-  .metaline{display:flex;flex-wrap:wrap;margin-top:9px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .hook{margin:54px 0 0;max-width:34em}
+  .hook-q{font-family:var(--serif);font-size:clamp(30px,4.3vw,50px);line-height:1.22;letter-spacing:-.01em;margin:0;color:var(--ink);position:relative}
+  .hook-q .qm{color:var(--accent);opacity:.55;font-size:1.5em;line-height:.6;vertical-align:-.12em}
+  .hook-n{font-family:var(--serif);font-size:clamp(18px,2.25vw,24px);line-height:1.7;margin:14px 0 0;color:var(--ink-2)}
+  .hook-n em{font-style:normal;font-family:var(--serif);font-weight:600;font-size:2.05em;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--accent);margin:0 .14em;vertical-align:-.08em}
+  .hook-n .b{color:var(--ink);font-weight:600;box-shadow:inset 0 -.5em 0 var(--accent-soft)}
+  .hook-t{font-size:15px;color:var(--ink-3);margin:16px 0 0;letter-spacing:.01em}
+  .hook-s{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin:22px 0 0;text-transform:uppercase}
+  .hook-s i{font-style:normal;color:var(--accent);margin-left:6px}
+  .metaline{display:flex;flex-wrap:wrap;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .metaline div{flex:1 1 0;min-width:138px;padding:15px 18px 13px 0;border-right:1px solid var(--line-soft)}
   .metaline div:last-child{border-right:0}
   .metaline .n{font-family:var(--serif);font-size:29px;line-height:1;color:var(--accent);display:block}
@@ -283,7 +291,12 @@
       <span class="lbl">覆盖</span>
       <span>微信小程序</span><span>Web 后台</span><span>后端接口</span><span>原生 App</span><span>单文件网页</span>
     </div>
-    <div class="metalabel">规格</div>
+    <div class="hook">
+      <p class="hook-q"><span class="qm">「</span>不是这个意思。<span class="qm">」</span></p>
+      <p class="hook-n">你一天说 <em>50</em> 遍 —— 该换的是<span class="b">规矩</span>，不是 AI。</p>
+      <p class="hook-t">这不是协作，这是带新人。</p>
+      <p class="hook-s">往下 6 节，全是怎么让这句话消失 <i>↓</i></p>
+    </div>
     <div class="metaline">
       <div><span class="n">2</span><span class="l">skill 分工：顺序 × 质量</span></div>
       <div><span class="n">21</span><span class="l">硬约束：5 流程 + 16 铁律</span></div>
