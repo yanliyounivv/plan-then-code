@@ -71,15 +71,14 @@
   .scopes{margin:50px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:2px 22px;font-size:13.2px;color:var(--ink-2);letter-spacing:.01em;line-height:1.9}
   .scopes .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-right:15px}
   .scopes span:not(.lbl){white-space:nowrap}
-  .hook{margin:54px 0 0;max-width:34em}
-  .hook-q{font-family:var(--serif);font-size:clamp(30px,4.3vw,50px);line-height:1.22;letter-spacing:-.01em;margin:0;color:var(--ink);position:relative}
-  .hook-q .qm{color:var(--accent);opacity:.55;font-size:1.5em;line-height:.6;vertical-align:-.12em}
-  .hook-n{font-family:var(--serif);font-size:clamp(18px,2.25vw,24px);line-height:1.7;margin:14px 0 0;color:var(--ink-2)}
-  .hook-n em{font-style:normal;font-family:var(--serif);font-weight:600;font-size:2.05em;line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--accent);margin:0 .14em;vertical-align:-.08em}
-  .hook-n .b{color:var(--ink);font-weight:600;box-shadow:inset 0 -.5em 0 var(--accent-soft)}
-  .hook-t{font-size:15px;color:var(--ink-3);margin:16px 0 0;letter-spacing:.01em}
-  .hook-s{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin:22px 0 0;text-transform:uppercase}
-  .hook-s i{font-style:normal;color:var(--accent);margin-left:6px}
+  .hook{margin:52px 0 0;max-width:34em;border-left:2px solid var(--accent);padding:4px 0 4px 24px}
+  .hk-lead{font-size:clamp(14px,1.5vw,15.5px);line-height:1.8;color:var(--ink-3);margin:0;letter-spacing:.03em}
+  .hk-lead em{font-style:normal;font-family:var(--serif);font-weight:600;font-size:1.75em;line-height:.8;color:transparent;-webkit-text-stroke:1.2px var(--accent);margin:0 .16em;vertical-align:-.05em}
+  .hk-line{font-family:var(--serif);font-size:clamp(34px,5vw,58px);line-height:1.24;letter-spacing:-.015em;margin:12px 0 0;color:var(--ink);text-wrap:balance}
+  .hk-end{font-family:var(--serif);font-size:clamp(19px,2.4vw,27px);line-height:1.5;margin:14px 0 0;color:var(--ink-2);letter-spacing:-.01em}
+  .hk-end u{text-decoration:none;color:var(--accent);box-shadow:inset 0 -.44em 0 rgba(168,58,36,.14)}
+  .hk-s{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--ink-3);margin:24px 0 0;text-transform:uppercase}
+  .hk-s i{font-style:normal;color:var(--accent);margin-left:5px}
   .metaline{display:flex;flex-wrap:wrap;margin-top:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .metaline div{flex:1 1 0;min-width:138px;padding:15px 18px 13px 0;border-right:1px solid var(--line-soft)}
   .metaline div:last-child{border-right:0}
@@ -292,10 +291,10 @@
       <span>微信小程序</span><span>Web 后台</span><span>后端接口</span><span>原生 App</span><span>单文件网页</span>
     </div>
     <div class="hook">
-      <p class="hook-q"><span class="qm">「</span>不是这个意思。<span class="qm">」</span></p>
-      <p class="hook-n">你一天说 <em>50</em> 遍 —— 该换的是<span class="b">规矩</span>，不是 AI。</p>
-      <p class="hook-t">这不是协作，这是带新人。</p>
-      <p class="hook-s">往下 6 节，全是怎么让这句话消失 <i>↓</i></p>
+      <p class="hk-lead">如果你一天要跟 AI 说 <em>50</em> 次</p>
+      <p class="hk-line">「不是这个意思」</p>
+      <p class="hk-end">这套东西，是<u>给你写的</u>。</p>
+      <p class="hk-s">往下 6 节 <i>↓</i></p>
     </div>
     <div class="metaline">
       <div><span class="n">2</span><span class="l">skill 分工：顺序 × 质量</span></div>
