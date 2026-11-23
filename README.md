@@ -8,6 +8,11 @@
 
 安装方式：把 `skills/` 下两个目录放进 AI 工具的 skills 目录即可。不需要 API、不需要服务器。
 
+<p align="center">
+  <img src="docs/screenshots/hero.jpg" alt="首屏：左侧讲它管什么，右侧是这套规范的五层等轴测拆解" width="100%">
+</p>
+
+
 ---
 
 ## 它和常见的「计划模式」差在哪
@@ -102,3 +107,15 @@ rules v6.1 · workflow v4.1（2026-11-24）
 ## 联系作者
 
 邮箱 `3444203051@qq.com`。写清你在做什么项目、卡在哪，比「你好我想要」有用得多——我会按你的场景回：适不适合你用、哪几条该照你的习惯改。
+
+---
+
+## 界面
+
+<p align="left">
+  <img src="docs/screenshots/exploded.jpg" alt="五层拆解：workflow → rules → P0–P5 → references → 校验" width="300">
+</p>
+
+左边那张图不是插画，是这套东西的结构：**从下往上依次是顺序（workflow）、质量（rules）、裁决（P0–P5）、参考（references）、证据（校验）**。规则再多，也只是叠在这五层里的某一层，不会变成一堆散沙。
+
+网页版（宣传页与完整原理说明）在 [`docs/`](docs/) 目录，直接用浏览器打开 `docs/index.html` 即可；开启 GitHub Pages 后可在 `https://<你的用户名>.github.io/plan-then-code/` 访问。
