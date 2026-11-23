@@ -1,12 +1,29 @@
 # plan-then-code
 
-**给 AI 编程助手的一套硬约束。管的是「计划之后」的那五件事。**
+<p>
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-A83A24">
+  <img alt="skills" src="https://img.shields.io/badge/skills-2-A83A24">
+  <img alt="hard rules" src="https://img.shields.io/badge/hard%20rules-21-A83A24">
+  <img alt="script checks" src="https://img.shields.io/badge/script%20checks-6-A83A24">
+  <img alt="size limit" src="https://img.shields.io/badge/SKILL.md%20limit-7KB-A83A24">
+</p>
+
+**给 AI 编程助手（Claude Code / Cursor / Codex / 任何支持 SKILL.md 的工具）的一套硬约束。管的是「计划之后」的那五件事。**
+
+> 中文说明在下面 · [English summary](#english-summary)
 
 现在「先出计划再动手」已经是标配。真正每天出问题的是计划之后：规则打架听谁的、同一条错第三次还试不试、规则写到第 50 条会不会自相矛盾、AI 说「改好了」凭什么算过。这里每一件都有硬答案，而且能被脚本验。
 
 > 一句话定位：**按计划写代码，不是按代码写 md。** 主产物是跑得起来的代码；文档在收尾时一次补齐，不拿它当进度证据。
 
-安装方式：把 `skills/` 下两个目录放进 AI 工具的 skills 目录即可。不需要 API、不需要服务器。
+**30 秒安装**
+
+```bash
+git clone https://github.com/yanliyounivv/plan-then-code.git
+cp -R plan-then-code/skills/* ~/.claude/skills/    # 或 Cursor / Codex 对应的 skills 目录
+```
+
+不需要 API、不需要服务器、不需要额外依赖。装完直接对话即可，它会先给计划再动手。
 
 <p align="center">
   <img src="docs/screenshots/hero.jpg" alt="首屏：左侧讲它管什么，右侧是这套规范的五层等轴测拆解" width="100%">
@@ -119,3 +136,15 @@ rules v6.1 · workflow v4.1（2026-11-24）
 左边那张图不是插画，是这套东西的结构：**从下往上依次是顺序（workflow）、质量（rules）、裁决（P0–P5）、参考（references）、证据（校验）**。规则再多，也只是叠在这五层里的某一层，不会变成一堆散沙。
 
 网页版（宣传页与完整原理说明）在 [`docs/`](docs/) 目录，直接用浏览器打开 `docs/index.html` 即可；开启 GitHub Pages 后可在 `https://<你的用户名>.github.io/plan-then-code/` 访问。
+
+---
+
+## English summary
+
+**plan-then-code** is a set of hard constraints for AI coding agents (Claude Code, Cursor, Codex, any tool that loads `SKILL.md`).
+
+Planning modes are everywhere. This addresses what happens *after* the plan: which rule wins when two conflict, when to stop retrying, how to stop rule files from bloating, and what counts as "done". 21 hard rules, 6 scripted checks, a 7 KB size ceiling per skill, `SKILL.md` format, zero dependencies.
+
+Install: clone and copy `skills/*` into your agent's skills directory.
+
+MIT licensed.
